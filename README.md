@@ -3,9 +3,6 @@
 🔭 I’m currently working on AWS Cloud Projects `
 `👯 I’m looking to collaborate on AI and Ml related topics`
 `🤝 I’m looking for help with anything that catches my eye`
-`🌱 I’m currently learning M`
-`💬 Ask `
-`⚡ Fun fact
 
 ## 🌐 Socials:
 
