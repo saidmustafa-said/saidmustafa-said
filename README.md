@@ -1,6 +1,11 @@
 # 💫 About Me:
 
-🔭 I’m currently working on AWS Cloud Projects `<br>`👯 I’m looking to collaborate on AI and Ml related topics`<br>`🤝 I’m looking for help with anything that catches my eye`<br>`🌱 I’m currently learning M`<br>`💬 Ask `<br>`⚡ Fun fact
+🔭 I’m currently working on AWS Cloud Projects `
+`👯 I’m looking to collaborate on AI and Ml related topics`
+`🤝 I’m looking for help with anything that catches my eye`
+`🌱 I’m currently learning M`
+`💬 Ask `
+`⚡ Fun fact
 
 ## 🌐 Socials:
 
