@@ -2,7 +2,7 @@ name: Update README with Latest Repos
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
   workflow_dispatch:     # Allows manual trigger
 
 jobs:
@@ -26,10 +26,17 @@ jobs:
     - name: Update README
       run: node scripts/update-readme.js
 
-    - name: Commit changes
+    - name: Stage changes
       run: |
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
-        git add README.md
-        git diff-index --quiet HEAD || git commit -m "Updated README with recent repos and activities"
-        git push
+        git add README.md package.json  # Add any other files you need to commit
+
+    - name: Commit changes
+      run: |
+        if ! git diff --cached --quiet; then  # Check if there are staged changes
+          git commit -m "Updated README with recent repos and activities"
+          git push
+        else
+          echo "No changes to commit"
+        fi
