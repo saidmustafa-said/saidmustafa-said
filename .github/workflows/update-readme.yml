@@ -1,0 +1,30 @@
+name: Update README with Latest Repos
+
+on:
+  # The workflow runs every day at midnight (UTC) or when manually triggered
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Fetch Latest Repos and Update README
+        run: |
+          # Fetch recent GitHub events
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/saidmustafa-said/events > events.json
+
+          # Run the script to update README
+          node scripts/update-readme.js
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add README.md
+          git commit -m "Updated README with recent repos"
+          git push
