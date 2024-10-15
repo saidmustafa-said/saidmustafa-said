@@ -52,18 +52,18 @@ Here’s how you can structure the profile to showcase your **Recent Repositorie
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [Repository 1](#) - Description of the repository.
-- [Repository 2](#) - Description of the repository.
-- [Repository 3](#) - Description of the repository.
+- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
+- [transformer-explainer](https://github.com/saidmustafa-said/transformer-explainer) - Transformer Explained Visually: Learn How LLM Transformer Models Work with Interactive Visualization
+- [anything-llm](https://github.com/saidmustafa-said/anything-llm) - The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, and more.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [Repository 1](#) on `main`
-- Created a new issue on [Repository 2](#)
-- Merged a pull request in [Repository 3](#)
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
