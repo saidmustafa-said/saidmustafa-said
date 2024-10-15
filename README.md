@@ -50,6 +50,8 @@ Here’s how you can structure the profile to showcase your **Recent Repositorie
 
 # 📂 Recent Repositories Worked On:
 
+- [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said)
+
 ### [AWS Lambda Functions](https://github.com/saidmustafa-said/AWS-Lambda)  
 **Description**: Building AWS Lambda functions to automate tasks.  
 **Latest Work**: Recently optimized Lambda triggers for cost efficiency.  
