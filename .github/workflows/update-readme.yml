@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # Updated version to v3
 
       - name: Fetch Latest Repos and Update README
         run: |
@@ -26,5 +26,8 @@ jobs:
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add README.md
-          git commit -m "Updated README with recent repos"
+
+          # Only commit if there are changes
+          git diff-index --quiet HEAD || git commit -m "Updated README with recent repos"
+
           git push
