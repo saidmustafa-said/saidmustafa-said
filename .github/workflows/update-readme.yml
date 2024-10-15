@@ -1,29 +1,35 @@
 name: Update README with Latest Repos
 
 on:
-  # The workflow runs every day at midnight (UTC) or when manually triggered
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:     # Allows manual trigger
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Grant write access to the contents
+      contents: write
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Fetch Latest Repos and Update README
-        run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/saidmustafa-said/events > events.json
-          node scripts/update-readme.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: Commit changes
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add README.md
-          git diff-index --quiet HEAD || git commit -m "Updated README with recent repos"
-          git push
+    - name: Install dependencies
+      run: npm install axios
+
+    - name: Update README
+      run: node scripts/update-readme.js
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add README.md
+        git diff-index --quiet HEAD || git commit -m "Updated README with recent repos and activities"
+        git push
