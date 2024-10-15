@@ -49,34 +49,21 @@ Here’s how you can structure the profile to showcase your **Recent Repositorie
 ---
 
 # 📂 Recent Repositories Worked On:
+Here are my latest repositories that I've been working on:
 
-- [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said)
+<!-- RECENT_REPOS_START -->
+- [Repository 1](#) - Description of the repository.
+- [Repository 2](#) - Description of the repository.
+- [Repository 3](#) - Description of the repository.
+<!-- RECENT_REPOS_END -->
 
-### [AWS Lambda Functions](https://github.com/saidmustafa-said/AWS-Lambda)  
-**Description**: Building AWS Lambda functions to automate tasks.  
-**Latest Work**: Recently optimized Lambda triggers for cost efficiency.  
-![Repo Stats](https://github-readme-stats.vercel.app/api/pin/?username=saidmustafa-said&repo=AWS-Lambda&theme=dark)
+## 📝 Latest Activities
+Here's what I've been working on recently:
 
-### [ML Model Pipelines](https://github.com/saidmustafa-said/ML-Pipelines)  
-**Description**: Automation of Machine Learning pipelines using Python and Docker.  
-**Latest Work**: Enhanced the preprocessing step for data augmentation.  
-![Repo Stats](https://github-readme-stats.vercel.app/api/pin/?username=saidmustafa-said&repo=ML-Pipelines&theme=dark)
+<!-- RECENT_ACTIVITY_START -->
+- Pushed code to [Repository 1](#) on `main`
+- Created a new issue on [Repository 2](#)
+- Merged a pull request in [Repository 3](#)
+<!-- RECENT_ACTIVITY_END -->
 
-### [DevOps Kubernetes CI/CD](https://github.com/saidmustafa-said/DevOps-Kubernetes)  
-**Description**: Setting up CI/CD pipelines using Jenkins, Docker, and Kubernetes.  
-**Latest Work**: Configured Jenkins pipelines for rolling updates in Kubernetes.  
-![Repo Stats](https://github-readme-stats.vercel.app/api/pin/?username=saidmustafa-said&repo=DevOps-Kubernetes&theme=dark)
-
----
-
-# 🔥 Recent Activity:
-
-<!--START_SECTION:activity-->
-1. 🐛 Opened [issue #5](https://github.com/saidmustafa-said/ML-Pipelines/issues/5) in ML-Pipelines repo  
-2. 💻 Pushed code to [AWS Lambda Functions](https://github.com/saidmustafa-said/AWS-Lambda)  
-3. 🚀 Deployed new version of [Kubernetes CI/CD](https://github.com/saidmustafa-said/DevOps-Kubernetes)  
-<!--END_SECTION:activity-->
-
----
-
-This profile structure highlights your recent work and contributions on specific repositories, making it clear to visitors what you’re actively working on. The activity feed will update dynamically if you integrate a GitHub activity workflow.
+Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
