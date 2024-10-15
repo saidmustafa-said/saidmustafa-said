@@ -1,0 +1,12 @@
+{
+  "name": "github-readme-updater",
+  "version": "1.0.0",
+  "description": "Updates GitHub Profile README with recent repositories",
+  "main": "index.js",
+  "scripts": {
+    "start": "node scripts/update-readme.js"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
