@@ -1,7 +1,3 @@
-Here’s how you can structure the profile to showcase your **Recent Repositories Worked On** instead of the **Featured Repositories**, along with the last three activities fetched dynamically from your recent contributions:
-
----
-
 # 💫 About Me:
   
 🔭 I’m currently working on **AWS Cloud Projects**  
@@ -15,7 +11,6 @@ Here’s how you can structure the profile to showcase your **Recent Repositorie
 ## 🌐 Connect with Me:
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/said-mustafa-said)  
-[![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/saidmustafa-said)
 
 ---
 
