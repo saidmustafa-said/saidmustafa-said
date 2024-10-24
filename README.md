@@ -47,9 +47,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [said-mustafa](https://github.com/saidmustafa-said/said-mustafa) - No description
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [transformer-explainer](https://github.com/saidmustafa-said/transformer-explainer) - Transformer Explained Visually: Learn How LLM Transformer Models Work with Interactive Visualization
-- [anything-llm](https://github.com/saidmustafa-said/anything-llm) - The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, and more.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
