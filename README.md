@@ -47,17 +47,20 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) - No description
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) - No description
-- [dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) - testing cloud infrastructures with dcoker image
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
-- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
+- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
+- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
+- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
+- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
+- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
