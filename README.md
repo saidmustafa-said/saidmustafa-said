@@ -47,18 +47,16 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [first-contributions](https://github.com/saidmustafa-said/first-contributions) - 🚀✨ Help beginners to contribute to open source projects
 - [self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) - No description
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) - No description
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
-- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
-- Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
+- Merged a pull request in [firstcontributions/first-contributions](https://github.com/firstcontributions/first-contributions)
 - Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
 - Pushed code to [saidmustafa-said/self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) on `main`
 <!-- RECENT_ACTIVITY_END -->
