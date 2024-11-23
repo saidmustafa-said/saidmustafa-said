@@ -47,9 +47,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [first-contributions](https://github.com/saidmustafa-said/first-contributions) - 🚀✨ Help beginners to contribute to open source projects
 - [self-driving-deeplearning](https://github.com/saidmustafa-said/self-driving-deeplearning) - No description
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
