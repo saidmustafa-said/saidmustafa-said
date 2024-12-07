@@ -47,20 +47,18 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) - No description
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) - testing cloud infrastructures with dcoker image
-- [first-contributions](https://github.com/saidmustafa-said/first-contributions) - 🚀✨ Help beginners to contribute to open source projects
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [saidmustafa-said/dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) on `main`
-- Pushed code to [saidmustafa-said/dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) on `main`
-- Pushed code to [saidmustafa-said/dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) on `main`
-- Pushed code to [saidmustafa-said/dockerImage-nginx-testing](https://github.com/saidmustafa-said/dockerImage-nginx-testing) on `main`
-- Merged a pull request in [firstcontributions/first-contributions](https://github.com/firstcontributions/first-contributions)
+- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `gh-pages`
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `gh-pages`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
