@@ -47,8 +47,8 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [machine_learning](https://github.com/saidmustafa-said/machine_learning) - Study guide for new ml engineers
+- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) - Analyze your Instagram followers and following lists to generate various results.
 <!-- RECENT_REPOS_END -->
 
@@ -56,6 +56,7 @@ Here are my latest repositories that I've been working on:
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
+- Pushed code to [saidmustafa-said/machine_learning](https://github.com/saidmustafa-said/machine_learning) on `main`
 - Pushed code to [saidmustafa-said/Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) on `main`
 - Pushed code to [saidmustafa-said/Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) on `main`
 <!-- RECENT_ACTIVITY_END -->
