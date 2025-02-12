@@ -57,7 +57,7 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [saidmustafa-said/machine_learning](https://github.com/saidmustafa-said/machine_learning) on `main`
-- Pushed code to [saidmustafa-said/Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) on `main`
+- Pushed code to [saidmustafa-said/machine_learning](https://github.com/saidmustafa-said/machine_learning) on `main`
 - Pushed code to [saidmustafa-said/Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
