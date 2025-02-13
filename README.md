@@ -90,18 +90,19 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [machine_learning](https://github.com/saidmustafa-said/machine_learning) - Study guide for new ml engineers
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) - Analyze your Instagram followers and following lists to generate various results.
+- [Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) - No description
+- [machine_learning](https://github.com/saidmustafa-said/machine_learning) - Study guide for new ml engineers
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [saidmustafa-said/machine_learning](https://github.com/saidmustafa-said/machine_learning) on `main`
-- Pushed code to [saidmustafa-said/machine_learning](https://github.com/saidmustafa-said/machine_learning) on `main`
-- Pushed code to [saidmustafa-said/Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) on `main`
+- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
+- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
+- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
+- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
