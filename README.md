@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [uBlock](https://github.com/saidmustafa-said/uBlock) - uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
+- [open-thoughts](https://github.com/saidmustafa-said/open-thoughts) - Open Thoughts: Fully Open Data Curation for Thinking Models
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [Instagram-Analysis-Follower-Following](https://github.com/saidmustafa-said/Instagram-Analysis-Follower-Following) - Analyze your Instagram followers and following lists to generate various results.
+- [uBlock](https://github.com/saidmustafa-said/uBlock) - uBlock Origin - An efficient blocker for Chromium and Firefox. Fast and lean.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
@@ -100,8 +100,6 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
-- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
-- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `gh-pages`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
