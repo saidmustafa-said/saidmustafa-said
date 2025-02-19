@@ -100,7 +100,7 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `main`
-- Pushed code to [saidmustafa-said/saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) on `main`
+- Pushed code to [saidmustafa-said/Said-Mustafa-Said](https://github.com/saidmustafa-said/Said-Mustafa-Said) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
