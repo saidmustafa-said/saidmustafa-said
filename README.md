@@ -90,17 +90,15 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [TheBigPromptLibrary](https://github.com/saidmustafa-said/TheBigPromptLibrary) - A collection of prompts, system prompts and LLM instructions
+- [system-prompts-and-models-of-ai-tools](https://github.com/saidmustafa-said/system-prompts-and-models-of-ai-tools) - FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent & VSCode Agent (And other Open Sourced) System Prompts, Tools & AI Models.
 - [my-website](https://github.com/saidmustafa-said/my-website) - No description
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [genkit](https://github.com/saidmustafa-said/genkit) - An open source framework for building AI-powered apps with familiar code-centric patterns. Genkit makes it easy to develop, integrate, and test AI features with observability and evaluations. Genkit works with various models and platforms.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
-- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `gh-pages`
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `gh-pages`
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
