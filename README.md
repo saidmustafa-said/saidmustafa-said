@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [TheBigPromptLibrary](https://github.com/saidmustafa-said/TheBigPromptLibrary) - A collection of prompts, system prompts and LLM instructions
 - [system-prompts-and-models-of-ai-tools](https://github.com/saidmustafa-said/system-prompts-and-models-of-ai-tools) - FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent & VSCode Agent (And other Open Sourced) System Prompts, Tools & AI Models.
-- [my-website](https://github.com/saidmustafa-said/my-website) - No description
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
