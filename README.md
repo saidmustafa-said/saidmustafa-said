@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [dia](https://github.com/saidmustafa-said/dia) - A TTS model capable of generating ultra-realistic dialogue in one pass.
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [TheBigPromptLibrary](https://github.com/saidmustafa-said/TheBigPromptLibrary) - A collection of prompts, system prompts and LLM instructions
-- [system-prompts-and-models-of-ai-tools](https://github.com/saidmustafa-said/system-prompts-and-models-of-ai-tools) - FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent & VSCode Agent (And other Open Sourced) System Prompts, Tools & AI Models.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
@@ -101,7 +101,6 @@ Here's what I've been working on recently:
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `gh-pages`
-- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
