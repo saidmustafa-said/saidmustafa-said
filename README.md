@@ -90,8 +90,8 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [dia](https://github.com/saidmustafa-said/dia) - A TTS model capable of generating ultra-realistic dialogue in one pass.
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
+- [dia](https://github.com/saidmustafa-said/dia) - A TTS model capable of generating ultra-realistic dialogue in one pass.
 - [TheBigPromptLibrary](https://github.com/saidmustafa-said/TheBigPromptLibrary) - A collection of prompts, system prompts and LLM instructions
 <!-- RECENT_REPOS_END -->
 
