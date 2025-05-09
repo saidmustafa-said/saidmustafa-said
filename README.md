@@ -90,8 +90,8 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [nominatim-docker](https://github.com/saidmustafa-said/nominatim-docker) - 100% working container for Nominatim
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
+- [nominatim-docker](https://github.com/saidmustafa-said/nominatim-docker) - 100% working container for Nominatim
 - [dia](https://github.com/saidmustafa-said/dia) - A TTS model capable of generating ultra-realistic dialogue in one pass.
 <!-- RECENT_REPOS_END -->
 
@@ -100,7 +100,6 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
-- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `gh-pages`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
