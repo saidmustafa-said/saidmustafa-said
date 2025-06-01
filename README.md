@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [dyad](https://github.com/saidmustafa-said/dyad) - Free, local, open-source AI app builder | v0 / lovable / Bolt alternative | 🌟 Star if you like it!
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [nominatim-docker](https://github.com/saidmustafa-said/nominatim-docker) - 100% working container for Nominatim
-- [dia](https://github.com/saidmustafa-said/dia) - A TTS model capable of generating ultra-realistic dialogue in one pass.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
