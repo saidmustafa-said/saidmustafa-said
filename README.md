@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [free-augmentcode](https://github.com/saidmustafa-said/free-augmentcode) - 用于无限续杯AugmentCode VSCode插件.A tool that allows you to use the AugmentCode  VSCode plugin indefinitely.
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [dyad](https://github.com/saidmustafa-said/dyad) - Free, local, open-source AI app builder | v0 / lovable / Bolt alternative | 🌟 Star if you like it!
-- [nominatim-docker](https://github.com/saidmustafa-said/nominatim-docker) - 100% working container for Nominatim
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
