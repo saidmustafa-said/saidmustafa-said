@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [my-website](https://github.com/saidmustafa-said/my-website) - No description
-- [free-augmentcode](https://github.com/saidmustafa-said/free-augmentcode) - 用于无限续杯AugmentCode VSCode插件.A tool that allows you to use the AugmentCode  VSCode plugin indefinitely.
+- [anything-llm](https://github.com/saidmustafa-said/anything-llm) - The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, and more.
+- [WebScraper](https://github.com/saidmustafa-said/WebScraper) - Python-based web crawling script with randomized intervals, user-agent rotation, and proxy server IP rotation to outsmart website bots and prevent blocking.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
