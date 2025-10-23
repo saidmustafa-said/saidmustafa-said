@@ -90,16 +90,18 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [awesome-n8n-templates](https://github.com/saidmustafa-said/awesome-n8n-templates) - Supercharge your workflow automation with this curated collection of n8n templates! Instantly connect your favorite apps-like Gmail, Telegram, Google Drive, Slack, and more-with ready-to-use, AI-powered automations. Save time, boost productivity, and unlock the true potential of n8n in just a few clicks.
 - [my-website](https://github.com/saidmustafa-said/my-website) - No description
+- [house-prediction](https://github.com/saidmustafa-said/house-prediction) - No description
+- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-
+- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `main`
+- Pushed code to [saidmustafa-said/my-website](https://github.com/saidmustafa-said/my-website) on `gh-pages`
+- Pushed code to [saidmustafa-said/house-prediction](https://github.com/saidmustafa-said/house-prediction) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
