@@ -90,20 +90,20 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [my-website](https://github.com/saidmustafa-said/my-website) - No description
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [house-prediction](https://github.com/saidmustafa-said/house-prediction) - No description
+- [awesome-n8n-templates](https://github.com/saidmustafa-said/awesome-n8n-templates) - Supercharge your workflow automation with this curated collection of n8n templates! Instantly connect your favorite apps-like Gmail, Telegram, Google Drive, Slack, and more-with ready-to-use, AI-powered automations. Save time, boost productivity, and unlock the true potential of n8n in just a few clicks.
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `main`
-- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `main`
 - Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
 - Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `gh-pages`
 - Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
+- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
+- Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `gh-pages`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
