@@ -103,7 +103,6 @@ Here's what I've been working on recently:
 - Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `main`
 - Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
 - Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `main`
-- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
