@@ -99,9 +99,7 @@ Here are my latest repositories that I've been working on:
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `gh-pages`
-- Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `main`
-- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
+
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
