@@ -90,8 +90,8 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [Scrapling](https://github.com/saidmustafa-said/Scrapling) - 🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
+- [Scrapling](https://github.com/saidmustafa-said/Scrapling) - 🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!
 - [house-prediction](https://github.com/saidmustafa-said/house-prediction) - No description
 <!-- RECENT_REPOS_END -->
 
