@@ -90,9 +90,9 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
+- [genkit](https://github.com/saidmustafa-said/genkit) - An open source framework for building AI-powered apps with familiar code-centric patterns. Genkit makes it easy to develop, integrate, and test AI features with observability and evaluations. Genkit works with various models and platforms.
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
 - [Scrapling](https://github.com/saidmustafa-said/Scrapling) - 🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!
-- [house-prediction](https://github.com/saidmustafa-said/house-prediction) - No description
 <!-- RECENT_REPOS_END -->
 
 ## 📝 Latest Activities
