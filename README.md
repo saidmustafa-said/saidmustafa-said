@@ -90,8 +90,8 @@
 Here are my latest repositories that I've been working on:
 
 <!-- RECENT_REPOS_START -->
-- [genkit](https://github.com/saidmustafa-said/genkit) - An open source framework for building AI-powered apps with familiar code-centric patterns. Genkit makes it easy to develop, integrate, and test AI features with observability and evaluations. Genkit works with various models and platforms.
 - [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
+- [genkit](https://github.com/saidmustafa-said/genkit) - An open source framework for building AI-powered apps with familiar code-centric patterns. Genkit makes it easy to develop, integrate, and test AI features with observability and evaluations. Genkit works with various models and platforms.
 - [Scrapling](https://github.com/saidmustafa-said/Scrapling) - 🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!
 <!-- RECENT_REPOS_END -->
 
@@ -101,7 +101,6 @@ Here's what I've been working on recently:
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `main`
 - Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `gh-pages`
-- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
