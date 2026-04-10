@@ -100,7 +100,6 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/.github](https://github.com/Conducks/.github) on `main`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
