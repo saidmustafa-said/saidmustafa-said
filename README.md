@@ -102,7 +102,6 @@ Here's what I've been working on recently:
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
