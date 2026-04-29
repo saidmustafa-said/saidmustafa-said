@@ -100,9 +100,9 @@ Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
+- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 - Merged a pull request in [Conducks/conducks](https://github.com/Conducks/conducks)
 - Merged a pull request in [Conducks/conducks](https://github.com/Conducks/conducks)
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `better-logic`
 <!-- RECENT_ACTIVITY_END -->
 
 Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
