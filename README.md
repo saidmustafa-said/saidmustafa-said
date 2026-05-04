@@ -99,10 +99,8 @@ Here are my latest repositories that I've been working on:
 Here's what I've been working on recently:
 
 <!-- RECENT_ACTIVITY_START -->
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
+- Pushed code to [Said-Foundation/portfolio](https://github.com/Said-Foundation/portfolio) on `gh-pages`
+- Pushed code to [Said-Foundation/saidmustafasaid](https://github.com/Said-Foundation/saidmustafasaid) on `gh-pages`
 - Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
 <!-- RECENT_ACTIVITY_END -->
 
