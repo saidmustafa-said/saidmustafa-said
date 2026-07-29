@@ -412,34 +412,38 @@ def track_card(profile: dict, t: Theme) -> None:
     write("track.svg", t, s)
 
 
-def writing_card(profile: dict, t: Theme) -> None:
+def update_readme_writing(profile: dict) -> None:
     """
-    The four most recent posts.
+    Write the recent posts into the README as real markdown links.
 
-    Twenty-one published pieces were invisible on this profile. The action reads
-    them from the site, so publishing anywhere reaches here with no second step.
+    Nothing inside an SVG is clickable on GitHub: the README image is served
+    through a proxy that strips interactivity, so a drawn list of posts offers no
+    way to open any of them. This is markdown for that reason, and it is markdown
+    INSTEAD of a card rather than as well as one, because a picture of the titles
+    above the same titles as text is the page saying everything twice.
     """
     posts = profile.get("writing", [])
     if not posts:
         return
 
-    row_h, top = 30, 34
-    h = top + row_h * len(posts) + 10
-    s = svg_open(WIDTH, h, t, "recent writing")
-    s += text("WRITING", PAD, 18, 11, t.muted, spacing="3")
-    s += text("saidmustafasaid.com/blog", WIDTH - PAD, 18, 10, t.muted, anchor="end")
+    readme = ROOT / "README.md"
+    body = readme.read_text(encoding="utf-8")
+    start, end = "<!-- writing:start -->", "<!-- writing:end -->"
+    if start not in body or end not in body:
+        print("  (README has no writing markers, skipping the link list)")
+        return
 
-    for i, p in enumerate(posts):
-        y = top + i * row_h
-        title = str(p["title"])
-        # 58 chars is what fits at 12px in this mono before the date column.
-        if len(title) > 58:
-            title = title[:57] + "…"
-        s += text(title, PAD, y + 12, 12, t.fg)
-        s += text(str(p.get("date", ""))[:10], WIDTH - PAD, y + 12, 10, t.muted, anchor="end")
-        if i < len(posts) - 1:
-            s += f'<rect x="{PAD}" y="{y + 22}" width="{INNER}" height="1" fill="{t.grid}"/>'
-    write("writing.svg", t, s)
+    lines = [
+        f"- [{p['title']}]({p['url']}) &nbsp;<sub>{str(p.get('date', ''))[:10]}</sub>"
+        for p in posts
+    ]
+    lines += ["", "[All writing →](https://saidmustafasaid.com/blog)"]
+    block = f"{start}\n\n" + "\n".join(lines) + f"\n\n{end}"
+
+    head, _, rest = body.partition(start)
+    _, _, tail = rest.partition(end)
+    readme.write_text(head + block + tail, encoding="utf-8")
+    print(f"  README: {len(posts)} writing links")
 
 
 def field_card(rank: dict, t: Theme) -> None:
@@ -548,6 +552,7 @@ def main() -> int:
     if profile:
         print(f"  figures: {len(profile.get('figures', []))}, roles: {len(profile.get('roles', []))}, "
               f"fields: {len(profile['fields'])}, writing: {len(profile.get('writing', []))}")
+        update_readme_writing(profile)
 
     for theme in (LIGHT, DARK):
         print(f"{theme.name}:")
@@ -558,7 +563,6 @@ def main() -> int:
             figures_card(profile, theme)
             field_card(profile, theme)
             track_card(profile, theme)
-            writing_card(profile, theme)
         calendar(days, total, private, theme)
         streak_card(current, longest, total, repos, theme)
     return 0

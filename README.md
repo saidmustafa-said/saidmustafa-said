@@ -1,8 +1,6 @@
 <div align="center">
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI/ML and Cloud Engineer, Berlin"/></picture>
-
-**Said Mustafa Said** · AI/ML &amp; Cloud Engineer · Berlin, Germany
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI/ML and Cloud Engineer, Berlin, Germany"/></picture>
 
 [saidmustafasaid.com](https://saidmustafasaid.com)
 &nbsp;·&nbsp;
@@ -76,7 +74,16 @@ penetration testing, which is why SECURITY scores where it does.
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-writing.svg"/><img src="assets/hd-writing.svg" width="620" alt="writing"/></picture>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/writing.svg"/><img src="assets/writing.svg" width="620" alt="Most recent posts"/></picture>
+<!-- writing:start -->
+
+- [The Words You Will Hear But Never Use](https://saidmustafasaid.com/blog/content-17-words-you-will-hear-but-never-use) &nbsp;<sub>2026-07-29</sub>
+- [Running Your Own Model](https://saidmustafasaid.com/blog/content-22-running-your-own-model) &nbsp;<sub>2026-07-29</sub>
+- [Caching Is the Cheapest Win](https://saidmustafasaid.com/blog/content-21-caching-is-the-cheapest-win) &nbsp;<sub>2026-07-29</sub>
+- [What You Must Not Send](https://saidmustafasaid.com/blog/content-20-what-you-must-not-send) &nbsp;<sub>2026-07-29</sub>
+
+[All writing →](https://saidmustafasaid.com/blog)
+
+<!-- writing:end -->
 
 I write to find out whether I actually understand something. If I cannot explain
 it plainly, I do not know it yet.
@@ -93,6 +100,9 @@ it plainly, I do not know it yet.
 
 <div align="center">
 <sub>
+
+**Said Mustafa Said**, AI/ML &amp; Cloud Engineer, Berlin, Germany ·
+[contact@saidmustafasaid.com](mailto:contact@saidmustafasaid.com)
 
 Every graphic here is drawn from my own data by
 [a daily action](.github/workflows/stats.yml), so nothing on this page loads
