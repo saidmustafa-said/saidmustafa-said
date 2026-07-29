@@ -327,32 +327,119 @@ def streak_card(current: int, longest: int, total: int, repos: int, t: Theme) ->
     write("streak.svg", t, s)
 
 
-RANK_URL = "https://saidmustafasaid.com/rank.json"
+PROFILE_URL = "https://saidmustafasaid.com/profile.json"
 
 # Tier → weight. Only the top tiers get the accent; the weak fields are drawn
 # muted so the chart reads as a shape rather than a scoreboard.
 RANK_TIERS = ["ACADEMIC", "JUNIOR", "ASSOCIATE", "PROFESSIONAL", "SENIOR", "STAFF", "ARCHITECT", "PRINCIPAL"]
 
 
-def fetch_rank(url: str = RANK_URL) -> dict | None:
+def fetch_profile(url: str = PROFILE_URL) -> dict | None:
     """
-    The 12-field mastery scores, from my own site.
+    Figures, roles, impact, field scores and recent writing, from my own site.
 
-    Returns None on any failure — a missing chart is survivable, a failed daily
-    run is not. The previously committed SVG then stays in place, so the README
-    never shows a broken image because a self-hosted box was rebooting.
+    Returns None on any failure. A missing card is survivable, a failed daily run
+    is not, so the previously committed SVGs stay in place and the README never
+    shows a broken image because a self-hosted box was rebooting.
     """
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "profile-generator"})
         with urllib.request.urlopen(req, timeout=20) as r:
             data = json.load(r)
-    except Exception as e:  # network, DNS, TLS, JSON — all equally non-fatal
-        print(f"  (rank.json unavailable: {e}; keeping the committed chart)")
+    except Exception as e:  # network, DNS, TLS, JSON, all equally non-fatal
+        print(f"  (profile.json unavailable: {e}, keeping the committed cards)")
         return None
     if not data.get("fields"):
-        print("  (rank.json has no fields; keeping the committed chart)")
+        print("  (profile.json has no fields, keeping the committed cards)")
         return None
     return data
+
+
+def figures_card(profile: dict, t: Theme) -> None:
+    """
+    The numbers that belong in the first screen.
+
+    A profile that opens with prose gives a reader nothing to hold. These are all
+    counted from real records, never asserted: projects from the log files,
+    certifications from the CV, fields from the scoring engine.
+    """
+    figures = profile.get("figures", [])
+    if not figures:
+        return
+    h = 92
+    s = svg_open(WIDTH, h, t, "key figures")
+    step = INNER / len(figures)
+    for i, f in enumerate(figures):
+        cx = PAD + step * i + step / 2
+        s += text(str(f["value"]), cx, 44, 26, t.accent, weight="600", anchor="middle")
+        # Two short lines beat one long one at this width.
+        words = str(f["label"]).split()
+        half = (len(words) + 1) // 2
+        s += text(" ".join(words[:half]).upper(), cx, 64, 9, t.muted, anchor="middle", spacing="1")
+        s += text(" ".join(words[half:]).upper(), cx, 76, 9, t.muted, anchor="middle", spacing="1")
+        if i:
+            s += f'<rect x="{PAD + step * i:.1f}" y="22" width="1" height="56" fill="{t.grid}"/>'
+    write("figures.svg", t, s)
+
+
+def track_card(profile: dict, t: Theme) -> None:
+    """Roles with dates, then what the work actually changed."""
+    roles = profile.get("roles", [])
+    impact = profile.get("impact", [])
+    if not roles:
+        return
+
+    row_h, top = 30, 34
+    h = top + row_h * len(roles) + (58 if impact else 14)
+    s = svg_open(WIDTH, h, t, "roles and measured impact")
+    s += text("TRACK RECORD", PAD, 18, 11, t.muted, spacing="3")
+
+    for i, r in enumerate(roles):
+        y = top + i * row_h
+        span = f"{r['from']} → {r['to']}"
+        s += text(span, PAD, y + 12, 11, t.accent if r["to"] == "now" else t.muted)
+        s += text(str(r["title"]), PAD + 108, y + 12, 12, t.fg)
+        s += text(str(r["company"]), PAD + 108, y + 25, 10, t.muted)
+
+    if impact:
+        base = top + row_h * len(roles) + 12
+        s += f'<rect x="{PAD}" y="{base}" width="{INNER}" height="1" fill="{t.grid}"/>'
+        step = INNER / len(impact)
+        for i, m in enumerate(impact):
+            cx = PAD + step * i + step / 2
+            s += text(str(m["value"]), cx, base + 26, 18, t.accent, weight="600", anchor="middle")
+            s += text(str(m["label"]).upper(), cx, base + 40, 9, t.muted, anchor="middle", spacing="1")
+    write("track.svg", t, s)
+
+
+def writing_card(profile: dict, t: Theme) -> None:
+    """
+    The four most recent posts.
+
+    Twenty-one published pieces were invisible on this profile. The action reads
+    them from the site, so publishing anywhere reaches here with no second step.
+    """
+    posts = profile.get("writing", [])
+    if not posts:
+        return
+
+    row_h, top = 30, 34
+    h = top + row_h * len(posts) + 10
+    s = svg_open(WIDTH, h, t, "recent writing")
+    s += text("WRITING", PAD, 18, 11, t.muted, spacing="3")
+    s += text("saidmustafasaid.com/blog", WIDTH - PAD, 18, 10, t.muted, anchor="end")
+
+    for i, p in enumerate(posts):
+        y = top + i * row_h
+        title = str(p["title"])
+        # 58 chars is what fits at 12px in this mono before the date column.
+        if len(title) > 58:
+            title = title[:57] + "…"
+        s += text(title, PAD, y + 12, 12, t.fg)
+        s += text(str(p.get("date", ""))[:10], WIDTH - PAD, y + 12, 10, t.muted, anchor="end")
+        if i < len(posts) - 1:
+            s += f'<rect x="{PAD}" y="{y + 22}" width="{INNER}" height="1" fill="{t.grid}"/>'
+    write("writing.svg", t, s)
 
 
 def field_card(rank: dict, t: Theme) -> None:
@@ -419,11 +506,12 @@ def field_card(rank: dict, t: Theme) -> None:
 # --------------------------------------------------------------------------- #
 
 HEADINGS = [
-    ("about", "01 — about"),
-    ("shipped", "02 — shipped"),
-    ("fields", "03 — field map"),
-    ("stats", "04 — telemetry"),
-    ("colophon", "05 — about this page"),
+    ("now", "01 · now"),
+    ("shipped", "02 · shipped"),
+    ("fields", "03 · field map"),
+    ("track", "04 · track record"),
+    ("writing", "05 · writing"),
+    ("stats", "06 · telemetry"),
 ]
 
 
@@ -451,22 +539,26 @@ def main() -> int:
     current, longest = streaks(days)
     repos = user["repositories"]["totalCount"]
 
-    # The centrepiece. Language-by-bytes was dropped: with ~96% of the work in
+    # Everything that is about the work rather than about GitHub comes from my
+    # own site. Language-by-bytes was dropped: with almost all the work in
     # private repositories it measured a rounding error and called it a person.
-    rank = fetch_rank()
+    profile = fetch_profile()
 
     print(f"{login}: {total} contributions ({private} private), streak {current}/{longest}")
-    if rank:
-        top3 = ", ".join(f"{f['label']} {f['value'] * 100:.0f}" for f in rank["fields"][:3])
-        print(f"  field map: rank {rank.get('rank')}, {len(rank['fields'])} fields — {top3}")
+    if profile:
+        print(f"  figures: {len(profile.get('figures', []))}, roles: {len(profile.get('roles', []))}, "
+              f"fields: {len(profile['fields'])}, writing: {len(profile.get('writing', []))}")
 
     for theme in (LIGHT, DARK):
         print(f"{theme.name}:")
         header(user.get("name") or "Said Mustafa Said", theme)
         for slug, label in HEADINGS:
             heading(slug, label, theme)
-        if rank:
-            field_card(rank, theme)
+        if profile:
+            figures_card(profile, theme)
+            field_card(profile, theme)
+            track_card(profile, theme)
+            writing_card(profile, theme)
         calendar(days, total, private, theme)
         streak_card(current, longest, total, repos, theme)
     return 0
