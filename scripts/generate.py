@@ -1,0 +1,462 @@
+#!/usr/bin/env python3
+"""
+Draw every graphic on the profile, from the GitHub GraphQL API, into committed SVG.
+
+Why generate instead of embedding someone else's badge service: a third-party
+image host can rate-limit, change, or go dark, and every one of them is a request
+that has to succeed for the page to look finished. Nothing here loads from
+anywhere — the SVGs are files in this repo.
+
+Why SVG and not markdown tables: GitHub strips <script> and CSS from READMEs, so
+an image is the only way to put this page's own type and colour on it. Animation
+is SMIL, inside the SVG, for the same reason.
+
+Two copies of every graphic are written — assets/ and assets/dark/ — and the
+README picks between them with <picture media="(prefers-color-scheme: dark)">.
+That is more reliable than a media query inside a single SVG, which GitHub's
+image proxy does not consistently honour.
+
+Stdlib only. Run: GITHUB_TOKEN=... GH_LOGIN=saidmustafa-said python3 scripts/generate.py
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+API = "https://api.github.com/graphql"
+ROOT = Path(__file__).resolve().parent.parent
+WIDTH = 620
+# Nothing is drawn inside this margin. Text anchored at the exact edge gets
+# clipped by the viewport in most renderers.
+PAD = 14
+INNER = WIDTH - 2 * PAD
+
+# Quiet → loud. Also the character ramp the portrait uses, so the year strip and
+# the portrait read as the same drawing.
+RAMP = " :+#@"
+
+
+# --------------------------------------------------------------------------- #
+# themes
+# --------------------------------------------------------------------------- #
+
+class Theme:
+    def __init__(self, name, bg, fg, muted, accent, grid, levels):
+        self.name = name
+        self.bg = bg
+        self.fg = fg
+        self.muted = muted
+        self.accent = accent
+        self.grid = grid
+        self.levels = levels  # 5 steps, empty → densest
+
+
+# The site's palette, so the profile and saidmustafasaid.com read as one brand.
+DARK = Theme(
+    name="dark",
+    bg="#0c1112",
+    fg="#f2f5f4",
+    muted="#7f8d8c",
+    accent="#00d3cd",
+    grid="#1a2524",
+    levels=["#161f20", "#0d4b4a", "#008f8b", "#00b3ae", "#00d3cd"],
+)
+
+# Teal is darkened on white: #00d3cd on #fff is ~1.6:1 and unreadable.
+LIGHT = Theme(
+    name="light",
+    bg="#ffffff",
+    fg="#0c1112",
+    muted="#6b7a79",
+    accent="#00807c",
+    grid="#e6ecec",
+    levels=["#eef2f2", "#b8e4e2", "#6cc9c5", "#22a7a2", "#00807c"],
+)
+
+
+# --------------------------------------------------------------------------- #
+# data
+# --------------------------------------------------------------------------- #
+
+QUERY = """
+query($login: String!) {
+  user(login: $login) {
+    name
+    login
+    contributionsCollection {
+      restrictedContributionsCount
+      contributionCalendar {
+        totalContributions
+        weeks { contributionDays { date contributionCount } }
+      }
+    }
+    repositories(
+      first: 100
+      ownerAffiliations: OWNER
+      isFork: false
+      orderBy: { field: PUSHED_AT, direction: DESC }
+    ) {
+      totalCount
+      nodes {
+        name
+        stargazerCount
+        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+          edges { size node { name } }
+        }
+      }
+    }
+  }
+}
+"""
+
+
+def fetch(login: str, token: str) -> dict:
+    body = json.dumps({"query": QUERY, "variables": {"login": login}}).encode()
+    req = urllib.request.Request(
+        API,
+        data=body,
+        headers={
+            "Authorization": f"bearer {token}",
+            "Content-Type": "application/json",
+            "User-Agent": f"{login}-profile-generator",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as r:
+        payload = json.load(r)
+    # GraphQL answers 200 with an errors array, so this has to be checked by hand.
+    if "errors" in payload:
+        raise SystemExit(f"GraphQL error: {payload['errors']}")
+    return payload["data"]["user"]
+
+
+def days_of(user: dict) -> list[tuple[date, int]]:
+    """Flatten the calendar to (date, count), oldest first."""
+    out = []
+    weeks = user["contributionsCollection"]["contributionCalendar"]["weeks"]
+    for w in weeks:
+        for d in w["contributionDays"]:
+            out.append((datetime.strptime(d["date"], "%Y-%m-%d").date(), d["contributionCount"]))
+    return out
+
+
+def streaks(days: list[tuple[date, int]]) -> tuple[int, int]:
+    """(current, longest).
+
+    Today is excluded from breaking the current streak: the day is not over, and
+    a run should not read as broken at 00:05 UTC because nothing is pushed yet.
+    """
+    longest = run = 0
+    for _, c in days:
+        run = run + 1 if c > 0 else 0
+        longest = max(longest, run)
+
+    today = days[-1][0] if days else None
+    current = 0
+    for d, c in reversed(days):
+        if c > 0:
+            current += 1
+        elif d == today:
+            continue  # today is still open
+        else:
+            break
+    return current, longest
+
+
+def languages(user: dict, top: int = 6) -> list[tuple[str, int]]:
+    """Bytes per language across owned, non-fork repositories."""
+    totals: dict[str, int] = {}
+    for repo in user["repositories"]["nodes"]:
+        for edge in repo["languages"]["edges"]:
+            totals[edge["node"]["name"]] = totals.get(edge["node"]["name"], 0) + edge["size"]
+    return sorted(totals.items(), key=lambda kv: kv[1], reverse=True)[:top]
+
+
+# --------------------------------------------------------------------------- #
+# svg helpers
+# --------------------------------------------------------------------------- #
+
+# No font file is shipped. Every text node is placed at an explicit x, and any
+# run that must line up uses textLength, so a viewer whose default monospace is
+# a different width still gets the intended layout instead of a squeezed one.
+FONT = "ui-monospace, 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace"
+
+
+def svg_open(w: int, h: int, t: Theme, label: str) -> str:
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
+        f'viewBox="0 0 {w} {h}" role="img" aria-label="{escape(label)}">'
+        f'<rect width="{w}" height="{h}" fill="{t.bg}"/>'
+    )
+
+
+def text(s: str, x: float, y: float, size: float, fill: str,
+         weight: str = "400", anchor: str = "start",
+         spacing: str = "0", length: float | None = None) -> str:
+    attrs = (
+        f'x="{x:.1f}" y="{y:.1f}" font-family="{FONT}" font-size="{size}" '
+        f'font-weight="{weight}" fill="{fill}" letter-spacing="{spacing}" '
+        f'text-anchor="{anchor}" xml:space="preserve"'
+    )
+    if length is not None:
+        attrs += f' textLength="{length:.1f}" lengthAdjust="spacing"'
+    return f"<text {attrs}>{escape(s)}</text>"
+
+
+def write(rel: str, t: Theme, body: str) -> None:
+    out = ROOT / ("assets/dark" if t.name == "dark" else "assets") / rel
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(body + "</svg>\n", encoding="utf-8")
+    print(f"  {out.relative_to(ROOT)}")
+
+
+# --------------------------------------------------------------------------- #
+# graphics
+# --------------------------------------------------------------------------- #
+
+def header(name: str, t: Theme) -> None:
+    """The top wordmark. Drawn rather than typed so the profile opens in the same
+    type and colour as saidmustafasaid.com — GitHub gives markdown neither."""
+    parts = name.upper().split()
+    line_h, first = 34, 42
+    # Canvas sized from the name, not hard-coded: a fixed height put the role
+    # line on top of the last name line.
+    h = first + line_h * (len(parts) - 1) + 52
+    s = svg_open(WIDTH, h, t, f"{name} — AI/ML and Cloud Engineer, Berlin")
+    for i, part in enumerate(parts):
+        s += text(part, PAD, first + i * line_h, 30,
+                  t.accent if i == 1 else t.fg, weight="600", spacing="1")
+    s += text("AI/ML & CLOUD ENGINEER   ·   BERLIN, GERMANY", PAD, h - 22, 11,
+              t.muted, spacing="3")
+    s += f'<rect x="{PAD}" y="{h - 10}" width="{INNER}" height="1" fill="{t.grid}"/>'
+    write("header.svg", t, s)
+
+
+def heading(slug: str, label: str, t: Theme) -> None:
+    """A section rule: number, label, hairline. The only way to get this page's
+    own type onto a heading, since GitHub strips CSS from markdown."""
+    h = 46
+    s = svg_open(WIDTH, h, t, label)
+    s += text(label.upper(), PAD, 20, 12, t.accent, weight="600", spacing="4")
+    s += f'<rect x="{PAD}" y="32" width="{INNER}" height="1" fill="{t.grid}"/>'
+    # Short accent segment that draws itself in, once, on load. The final width
+    # is the attribute value and the animation runs *to* it, so a renderer that
+    # ignores SMIL still shows the finished state rather than nothing.
+    s += (
+        f'<rect x="{PAD}" y="32" width="140" height="1" fill="{t.accent}">'
+        f'<animate attributeName="width" from="0" to="140" dur="0.9s" begin="0.15s" '
+        f'fill="freeze" calcMode="spline" keySplines="0.16 1 0.3 1" keyTimes="0;1"/>'
+        f"</rect>"
+    )
+    write(f"hd-{slug}.svg", t, s)
+
+
+def calendar(days: list[tuple[date, int]], total: int, private: int, t: Theme) -> None:
+    """The year as a grid. Rectangles, not characters, so it cannot be broken by
+    the viewer's font."""
+    pad_top = 54
+    offset0 = (days[0][0].weekday() + 1) % 7 if days else 0
+    weeks = (len(days) + offset0 + 6) // 7
+    # Size the cell to the column count instead of hard-coding it: 53 weeks at a
+    # fixed 9+3 overflows the 620px canvas and the last month falls off the edge.
+    step = INNER / weeks
+    gap = max(1.0, min(3.0, step * 0.25))
+    cell = step - gap
+    grid_w = weeks * step - gap
+    h = pad_top + round(7 * step) + 28
+    x0 = PAD + (INNER - grid_w) / 2
+
+    s = svg_open(WIDTH, h, t, f"{total} contributions in the last year")
+    s += text(f"{total:,}", PAD, 26, 26, t.fg, weight="600")
+    s += text("contributions in the last year", PAD, 44, 11, t.muted, spacing="2")
+    if private:
+        s += text(f"{private:,} private", WIDTH - PAD, 26, 11, t.muted, anchor="end", spacing="2")
+
+    # Level thresholds from this user's own distribution, not a fixed 1/3/6/9 —
+    # a fixed scale makes a quiet year look empty and a loud one look saturated.
+    counts = sorted(c for _, c in days if c > 0)
+    if counts:
+        qs = [counts[int(len(counts) * f)] for f in (0.25, 0.5, 0.75)]
+    else:
+        qs = [1, 2, 3]
+
+    def level(c: int) -> int:
+        if c == 0:
+            return 0
+        if c <= qs[0]:
+            return 1
+        if c <= qs[1]:
+            return 2
+        if c <= qs[2]:
+            return 3
+        return 4
+
+    # Week 0 may be partial: the calendar always starts on a Sunday, so offset
+    # the first column by the weekday of the first day.
+    for i, (d, c) in enumerate(days):
+        idx = i + offset0
+        col, row = idx // 7, idx % 7
+        x = x0 + col * step
+        y = pad_top + row * step
+        lv = level(c)
+        s += (
+            f'<rect x="{x:.2f}" y="{y:.2f}" width="{cell:.2f}" height="{cell:.2f}" rx="1" '
+            f'fill="{t.levels[lv]}">'
+            # Stagger left-to-right so the year appears to fill in.
+            f'<animate attributeName="opacity" from="0" to="1" dur="0.4s" '
+            f'begin="{0.15 + col * 0.012:.3f}s" fill="freeze"/>'
+            f"</rect>"
+        )
+
+    legend_y = pad_top + 7 * step + 12
+    s += text("less", x0, legend_y + 9, 10, t.muted)
+    for i, col in enumerate(t.levels):
+        s += (
+            f'<rect x="{x0 + 34 + i * step:.2f}" y="{legend_y:.2f}" '
+            f'width="{cell:.2f}" height="{cell:.2f}" rx="1" fill="{col}"/>'
+        )
+    s += text("more", x0 + 34 + 5 * step + 6, legend_y + 9, 10, t.muted)
+    write("stats.svg", t, s)
+
+
+def streak_card(current: int, longest: int, total: int, repos: int, t: Theme) -> None:
+    h = 96
+    s = svg_open(WIDTH, h, t, f"current streak {current} days, longest {longest} days")
+    cells = [
+        (str(current), "current streak"),
+        (str(longest), "longest streak"),
+        (f"{total:,}", "contributions"),
+        (str(repos), "own repos"),
+    ]
+    step = INNER / len(cells)
+    for i, (value, label) in enumerate(cells):
+        cx = PAD + step * i + step / 2
+        s += text(value, cx, 46, 28, t.accent, weight="600", anchor="middle")
+        s += text(label.upper(), cx, 68, 10, t.muted, anchor="middle", spacing="2")
+        if i:
+            x = PAD + step * i
+            s += f'<rect x="{x:.1f}" y="24" width="1" height="48" fill="{t.grid}"/>'
+    write("streak.svg", t, s)
+
+
+def lang_card(langs: list[tuple[str, int]], t: Theme) -> None:
+    row_h, top = 26, 40
+    h = top + row_h * len(langs) + 12
+    total = sum(v for _, v in langs) or 1
+    s = svg_open(WIDTH, h, t, "top languages by bytes")
+    s += text("TOP LANGUAGES", PAD, 20, 11, t.muted, spacing="3")
+    s += text("own repos only, forks excluded", WIDTH - PAD, 20, 10, t.muted, anchor="end")
+
+    bar_x = PAD + 116
+    bar_w = WIDTH - PAD - 56 - bar_x
+    for i, (name, size) in enumerate(langs):
+        y = top + i * row_h
+        pct = size / total
+        fill_w = bar_w * pct
+        s += text(name, PAD, y + 14, 12, t.fg)
+        s += f'<rect x="{bar_x}" y="{y + 5}" width="{bar_w}" height="10" rx="1" fill="{t.grid}"/>'
+        # Final width on the attribute, animation *to* it — a renderer that drops
+        # SMIL (or a static screenshot) shows a full bar, not an empty track.
+        s += (
+            f'<rect x="{bar_x}" y="{y + 5}" width="{fill_w:.1f}" height="10" rx="1" fill="{t.accent}">'
+            # Every start is offset: an animation that begins at exactly 0s has
+            # already applied `from` by the time a static renderer samples the
+            # frame, which erases the first bar.
+            f'<animate attributeName="width" from="0" to="{fill_w:.1f}" dur="0.9s" '
+            f'begin="{0.15 + i * 0.08:.2f}s" fill="freeze" calcMode="spline" '
+            f'keySplines="0.16 1 0.3 1" keyTimes="0;1"/>'
+            f"</rect>"
+        )
+        s += text(f"{pct * 100:4.1f}%", WIDTH - PAD, y + 14, 11, t.muted, anchor="end")
+    write("langs.svg", t, s)
+
+
+def year_strip(days: list[tuple[date, int]], t: Theme) -> None:
+    """One character per day, quiet to loud. textLength pins each row to the same
+    width, so the grid holds together in any monospace."""
+    counts = sorted(c for _, c in days if c > 0)
+    qs = [counts[int(len(counts) * f)] for f in (0.33, 0.66)] if counts else [1, 2]
+
+    def char(c: int) -> str:
+        if c == 0:
+            return RAMP[1]
+        if c <= qs[0]:
+            return RAMP[2]
+        if c <= qs[1]:
+            return RAMP[3]
+        return RAMP[4]
+
+    offset = (days[0][0].weekday() + 1) % 7 if days else 0
+    weeks = (len(days) + offset + 6) // 7
+    rows = [[" "] * weeks for _ in range(7)]
+    for i, (_, c) in enumerate(days):
+        idx = i + offset
+        rows[idx % 7][idx // 7] = char(c)
+
+    line_h, top = 15, 40
+    h = top + 7 * line_h + 14
+    s = svg_open(WIDTH, h, t, "the last year, one character per day")
+    s += text("THE LAST YEAR", PAD, 20, 11, t.muted, spacing="3")
+    s += text(f"{RAMP[1]} {RAMP[2]} {RAMP[3]} {RAMP[4]}  quiet to loud", WIDTH - PAD, 20, 10, t.muted, anchor="end")
+    for r, row in enumerate(rows):
+        s += text("".join(row), PAD, top + r * line_h, 12, t.accent, length=INNER)
+    write("year.svg", t, s)
+
+
+# --------------------------------------------------------------------------- #
+
+HEADINGS = [
+    ("about", "01 — about"),
+    ("stack", "02 — stack"),
+    ("projects", "03 — projects"),
+    ("stats", "04 — telemetry"),
+    ("colophon", "05 — about this page"),
+]
+
+
+def main() -> int:
+    token = os.environ.get("GITHUB_TOKEN")
+    login = os.environ.get("GH_LOGIN", "saidmustafa-said")
+    if not token:
+        print("GITHUB_TOKEN is required", file=sys.stderr)
+        return 1
+
+    try:
+        user = fetch(login, token)
+    except urllib.error.HTTPError as e:
+        print(f"GitHub API {e.code}: {e.read().decode()[:200]}", file=sys.stderr)
+        return 1
+
+    cc = user["contributionsCollection"]
+    total = cc["contributionCalendar"]["totalContributions"]
+    private = cc["restrictedContributionsCount"]
+    days = days_of(user)
+    # A year is 365 days; the calendar returns whole weeks, which overshoots.
+    cutoff = days[-1][0] - timedelta(days=364) if days else None
+    days = [d for d in days if d[0] >= cutoff] if cutoff else days
+
+    current, longest = streaks(days)
+    langs = languages(user)
+    repos = user["repositories"]["totalCount"]
+
+    print(f"{login}: {total} contributions, streak {current}/{longest}, {repos} own repos")
+    for theme in (LIGHT, DARK):
+        print(f"{theme.name}:")
+        header(user.get("name") or "Said Mustafa Said", theme)
+        for slug, label in HEADINGS:
+            heading(slug, label, theme)
+        calendar(days, total, private, theme)
+        streak_card(current, longest, total, repos, theme)
+        lang_card(langs, theme)
+        year_strip(days, theme)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

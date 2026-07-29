@@ -1,109 +1,93 @@
-# 💫 About Me:
-  
-🔭 I’m currently working on **AWS Cloud Projects**  
-🤝 Open to collaborating on **AI/ML projects** or **anything intriguing in tech**  
-🌱 Currently learning **DevOps best practices** and **Data Engineering**  
-💬 Ask me about **Cloud Computing**, **Data Pipelines**, and **Machine Learning**  
-⚡ Fun fact: I’m always up for a coding challenge!
+<div align="center">
 
----
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said — AI/ML &amp; Cloud Engineer, Berlin"/></picture>
 
-## 🌐 Socials
+**Said Mustafa Said** — AI/ML &amp; Cloud Engineer, Berlin, Germany.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/said-mustafa-said)  
-[![Website](https://img.shields.io/badge/Website-saidmustafasaid.com-4c8bf5?style=for-the-badge&logo=internet-explorer&logoColor=white)](https://saidmustafasaid.com)
+[saidmustafasaid.com](https://saidmustafasaid.com)
+&nbsp;·&nbsp;
+[about](https://saidmustafasaid.com/about)
+&nbsp;·&nbsp;
+[resume](https://saidmustafasaid.com/resume)
+&nbsp;·&nbsp;
+[writing](https://saidmustafasaid.com/blog)
+&nbsp;·&nbsp;
+[linkedin](https://www.linkedin.com/in/said-mustafa-said/)
+&nbsp;·&nbsp;
+[email](mailto:contact@saidmustafasaid.com)
 
----
+</div>
 
-# 💻 Tech Stack
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-about.svg"/><img src="assets/hd-about.svg" width="620" alt="about"/></picture>
 
-## Programming & Scripting Languages
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
-![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=for-the-badge&logo=powershell&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)
+> AI/ML and cloud engineer in Berlin. Three-plus years in production.<br>
+> Systems that survive contact with real traffic, not demos.
 
-## Cloud Platforms & DevOps
+I build AI systems end to end — multi-agent RAG, LLM orchestration, ML pipelines
+and MLOps — then run them on infrastructure I also own: Kubernetes, Terraform,
+AWS. AWS Certified DevOps Engineer (Professional). Most of the work is private,
+so the calendar below counts more than this account shows.
 
-### Cloud Providers
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Azure](https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoft-azure&logoColor=white)
-![GCP](https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-stack.svg"/><img src="assets/hd-stack.svg" width="620" alt="stack"/></picture>
 
-### Infrastructure as Code & Container Orchestration
-![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+<samp>python &nbsp; go &nbsp; typescript &nbsp; rust &nbsp; kubernetes &nbsp; terraform &nbsp; aws &nbsp; eks &nbsp; docker &nbsp; postgres &nbsp; duckdb &nbsp; next.js &nbsp; linux</samp>
 
-## Databases & Big Data
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![AmazonDynamoDB](https://img.shields.io/badge/Amazon%20DynamoDB-4053D6?style=for-the-badge&logo=Amazon%20DynamoDB&logoColor=white)
-![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-projects.svg"/><img src="assets/hd-projects.svg" width="620" alt="projects"/></picture>
 
-## AI, Machine Learning & MLOps
+**[CONDUCKS](https://conducks.com)** &nbsp;·&nbsp; <samp>typescript, tree-sitter, duckdb</samp><br>
+Structural intelligence for codebases. Tree-sitter parses the source, DuckDB holds<br>
+the graph, PageRank ranks it — so "what calls this" and "what breaks if I change<br>
+it" come from the real call graph instead of from a grep.
 
-### AI & Machine Learning Frameworks
-![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+**[myCVpath](https://mycvpath.com)** &nbsp;·&nbsp; <samp>python, llm agents, mcp</samp><br>
+AI-native CV intelligence. A multi-agent pipeline parses a CV, reads a job posting,<br>
+scores the fit and tailors the document. Exposed over MCP, so an agent can drive<br>
+the whole run end to end.
 
-### MLOps Tools
-![Amazon SageMaker](https://img.shields.io/badge/Amazon%20SageMaker-FF9900?style=for-the-badge&logo=amazon&logoColor=white)
-![Kubeflow](https://img.shields.io/badge/Kubeflow-326CE5?style=for-the-badge&logo=kubeflow&logoColor=white)
-![MLflow](https://img.shields.io/badge/MLflow-4285F4?style=for-the-badge&logo=mlflow&logoColor=white)
+**[saidmustafasaid.com](https://saidmustafasaid.com)** &nbsp;·&nbsp; <samp>next.js, typescript</samp><br>
+The full record: thirty-plus AI, cloud and platform builds with architecture<br>
+diagrams, plus a course-shaped blog on applied AI engineering.
 
-## Monitoring, Logging & Dashboarding
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
-![OpenSearch](https://img.shields.io/badge/OpenSearch-FF9900?style=for-the-badge&logo=opensearch&logoColor=white)
-![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white)
-![Kibana](https://img.shields.io/badge/Kibana-005571?style=for-the-badge&logo=kibana&logoColor=white)
+**[Free tools](https://saidmustafasaid.com/tools)** &nbsp;·&nbsp; <samp>go, python</samp><br>
+OCR and transcription, no signup — the public face of the internal media services.
 
-## CI/CD & Pipelines
-![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
-![GitLab CI](https://img.shields.io/badge/GitLab_CI-FCA121?style=for-the-badge&logo=gitlab&logoColor=white)
-![CircleCI](https://img.shields.io/badge/CircleCI-343434?style=for-the-badge&logo=circleci&logoColor=white)
-![Travis CI](https://img.shields.io/badge/Travis_CI-3EAAAF?style=for-the-badge&logo=travis&logoColor=white)
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-stats.svg"/><img src="assets/hd-stats.svg" width="620" alt="telemetry"/></picture>
 
+<div align="center">
 
----
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/stats.svg"/><img src="assets/stats.svg" width="620" alt="Contributions in the last year"/></picture>
 
-# 📊 GitHub Stats:
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/streak.svg"/><img src="assets/streak.svg" width="620" alt="Current streak, longest streak, contributions, own repositories"/></picture>
 
-### Overview:
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=saidmustafa-said&theme=dark&hide_border=false&include_all_commits=true&count_private=true&show_icons=true)
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs.svg"/><img src="assets/langs.svg" width="620" alt="Top languages by bytes, own repositories only"/></picture>
 
-### Contributions & Streak:
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=saidmustafa-said&theme=dark&hide_border=false)
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/year.svg"/><img src="assets/year.svg" width="620" alt="The last year, one character per day"/></picture>
 
-### Languages:
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=saidmustafa-said&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
+</div>
 
----
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-colophon.svg"/><img src="assets/hd-colophon.svg" width="620" alt="about this page"/></picture>
 
-# 📂 Recent Repositories Worked On:
-Here are my latest repositories that I've been working on:
+Every graphic here is generated, not embedded from anyone else's server. A
+[scheduled action](.github/workflows/stats.yml) draws them straight from the GitHub
+GraphQL API once a day and commits only what changed. Nothing on this page can
+rate-limit or go dark, because nothing on this page loads from a third party.
 
-<!-- RECENT_REPOS_START -->
-- [saidmustafa-said](https://github.com/saidmustafa-said/saidmustafa-said) - My personal repository.
-- [genkit](https://github.com/saidmustafa-said/genkit) - An open source framework for building AI-powered apps with familiar code-centric patterns. Genkit makes it easy to develop, integrate, and test AI features with observability and evaluations. Genkit works with various models and platforms.
-- [Scrapling](https://github.com/saidmustafa-said/Scrapling) - 🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!
-<!-- RECENT_REPOS_END -->
+They animate with SMIL inside the SVG, because GitHub strips scripts from READMEs.
+The section headings are SVGs for the same reason: GitHub also strips CSS, so an
+image is the only way to put this page's own type and colour on them. Each
+animation ends on its finished state, so a renderer that ignores SMIL still shows
+a complete graphic rather than an empty one.
 
-## 📝 Latest Activities
-Here's what I've been working on recently:
+Language totals cover public, non-fork repositories only — forks would drown the
+signal. The contribution count includes private work where the account exposes it;
+the organisation repositories where most of the code lives are not public.
 
-<!-- RECENT_ACTIVITY_START -->
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-- Pushed code to [Conducks/conducks](https://github.com/Conducks/conducks) on `main`
-<!-- RECENT_ACTIVITY_END -->
+<div align="center">
+<sub>
 
-Feel free to explore more of my work on [GitHub](https://github.com/saidmustafa-said).
+Said Mustafa Said · Berlin, Germany ·
+[saidmustafasaid.com](https://saidmustafasaid.com) ·
+[Said Foundation](https://github.com/Said-Foundation)
+
+</sub>
+</div>
