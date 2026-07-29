@@ -25,14 +25,16 @@
 
 I build AI systems end to end — multi-agent RAG, LLM orchestration, ML pipelines
 and MLOps — then run them on infrastructure I also own: Kubernetes, Terraform,
-AWS. AWS Certified DevOps Engineer (Professional). Most of the work is private,
-so the calendar below counts more than this account shows.
+AWS. AWS Certified DevOps Engineer (Professional).
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-stack.svg"/><img src="assets/hd-stack.svg" width="620" alt="stack"/></picture>
+**Almost all of it is private.** The large majority of my contributions go to
+closed repositories, so counting public bytes would measure a rounding error and
+call it a person. Below is the measured shape of the work instead: twelve fields,
+scored from real project history by my own engine, gaps included.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-shipped.svg"/><img src="assets/hd-shipped.svg" width="620" alt="shipped"/></picture>
 
 <samp>python &nbsp; go &nbsp; typescript &nbsp; rust &nbsp; kubernetes &nbsp; terraform &nbsp; aws &nbsp; eks &nbsp; docker &nbsp; postgres &nbsp; duckdb &nbsp; next.js &nbsp; linux</samp>
-
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-projects.svg"/><img src="assets/hd-projects.svg" width="620" alt="projects"/></picture>
 
 **[CONDUCKS](https://conducks.com)** &nbsp;·&nbsp; <samp>typescript, tree-sitter, duckdb</samp><br>
 Structural intelligence for codebases. Tree-sitter parses the source, DuckDB holds<br>
@@ -51,6 +53,15 @@ diagrams, plus a course-shaped blog on applied AI engineering.
 **[Free tools](https://saidmustafasaid.com/tools)** &nbsp;·&nbsp; <samp>go, python</samp><br>
 OCR and transcription, no signup — the public face of the internal media services.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-fields.svg"/><img src="assets/hd-fields.svg" width="620" alt="field map"/></picture>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/fields.svg"/><img src="assets/fields.svg" width="620" alt="Twelve engineering fields, scored from real project history"/></picture>
+
+<sub>Scored across thirty-plus real projects, not self-reported. The weak rows are
+the point: an assessment that hides MOBILE at zero is not worth reading, and they
+are what make the high rows believable. Recomputed on my own site; this chart
+follows it.</sub>
+
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-stats.svg"/><img src="assets/hd-stats.svg" width="620" alt="telemetry"/></picture>
 
 <div align="center">
@@ -59,28 +70,14 @@ OCR and transcription, no signup — the public face of the internal media servi
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/streak.svg"/><img src="assets/streak.svg" width="620" alt="Current streak, longest streak, contributions, own repositories"/></picture>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs.svg"/><img src="assets/langs.svg" width="620" alt="Top languages across repositories pushed in the last 12 months"/></picture>
-
-<details>
-<summary><sub>longer windows</sub></summary>
-<br/>
-
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs-3y.svg"/><img src="assets/langs-3y.svg" width="620" alt="Top languages across repositories pushed in the last three years"/></picture>
-
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs-all.svg"/><img src="assets/langs-all.svg" width="620" alt="Top languages across every public repository"/></picture>
-
-</details>
-
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/year.svg"/><img src="assets/year.svg" width="620" alt="The last year, one character per day"/></picture>
-
 </div>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-colophon.svg"/><img src="assets/hd-colophon.svg" width="620" alt="about this page"/></picture>
 
 Every graphic here is generated, not embedded from anyone else's server. A
-[scheduled action](.github/workflows/stats.yml) draws them straight from the GitHub
-GraphQL API once a day and commits only what changed. Nothing on this page can
-rate-limit or go dark, because nothing on this page loads from a third party.
+[scheduled action](.github/workflows/stats.yml) draws them once a day and commits
+only what changed. Nothing on this page can rate-limit or go dark, because nothing
+on this page loads from a third party.
 
 They animate with SMIL inside the SVG, because GitHub strips scripts from READMEs.
 The section headings are SVGs for the same reason: GitHub also strips CSS, so an
@@ -88,18 +85,19 @@ image is the only way to put this page's own type and colour on them. Each
 animation ends on its finished state, so a renderer that ignores SMIL still shows
 a complete graphic rather than an empty one.
 
-The language card defaults to the **last 12 months** — what I am writing now ages
-better than a lifetime total that only ever grows more stale. Longer windows are
-behind the toggle. One honest caveat: GitHub's language API reports a repository's
-CURRENT contents, with no history in it, so a window means "the repos I pushed to
-in that period", not "the bytes I wrote in it".
+**There is no language chart here, on purpose.** GitHub measures languages by
+bytes over public repositories, and almost all of my work is closed — so that
+chart described a handful of old coursework repos and nothing I actually do. At
+one point a single notebook repository was 88% of it, because a `.ipynb` stores
+every rendered plot as base64 inside the JSON and Linguist counts the pictures.
+The field map replaced it: the same question, answered from project history
+rather than from file sizes.
 
-Totals cover public, non-fork, non-archived repositories only — forks would drown
-the signal. Notebooks and markup are excluded and no single repository may exceed
-35% of a chart: a `.ipynb` stores every rendered plot as base64 inside the JSON, so
-one coursework repo was briefly 88% of the chart while saying nothing about the
-work. The contribution count includes private work where the account exposes it;
-the repositories where most of the code lives are not public.
+The field scores come from [saidmustafasaid.com/rank.json](https://saidmustafasaid.com/rank.json),
+which my scoring engine writes. If that site is unreachable when the action runs,
+the previously committed chart stays put — a stale number beats a broken image.
+The contribution calendar includes private work, which is why it is the one
+GitHub-native metric still on this page.
 
 <div align="center">
 <sub>

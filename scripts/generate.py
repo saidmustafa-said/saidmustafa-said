@@ -38,10 +38,6 @@ WIDTH = 620
 PAD = 14
 INNER = WIDTH - 2 * PAD
 
-# Quiet → loud. Also the character ramp the portrait uses, so the year strip and
-# the portrait read as the same drawing.
-RAMP = " :+#@"
-
 
 # --------------------------------------------------------------------------- #
 # themes
@@ -85,38 +81,9 @@ LIGHT = Theme(
 # data
 # --------------------------------------------------------------------------- #
 
-# Organisations whose repositories are also mine. Without these the language card
-# is a lie by omission: the biggest TypeScript codebase here lives in Conducks/,
-# is public, and was invisible because `ownerAffiliations: OWNER` means "owned by
-# the USER account" — an org repo is owned by the org, not by me.
-#
-# Listed explicitly rather than resolved from org membership, because the Actions
-# token is scoped to this repository and cannot enumerate an organisation's
-# members. Naming the org works with any token for public repos. Add an org here
-# when one starts holding work worth counting.
-EXTRA_ORGS = ["Conducks", "myCVpath", "Said-Foundation"]
-
-ORG_QUERY = """
-query($login: String!) {
-  organization(login: $login) {
-    repositories(
-      first: 100
-      isFork: false
-      orderBy: { field: PUSHED_AT, direction: DESC }
-    ) {
-      nodes {
-        name
-        isArchived
-        pushedAt
-        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
-          edges { size node { name } }
-        }
-      }
-    }
-  }
-}
-"""
-
+# Only what the remaining cards need: the contribution calendar and a repo
+# count. Per-repository languages are gone with the language chart — with ~96%
+# of the work private, counting public bytes measured a rounding error.
 QUERY = """
 query($login: String!) {
   user(login: $login) {
@@ -129,22 +96,8 @@ query($login: String!) {
         weeks { contributionDays { date contributionCount } }
       }
     }
-    repositories(
-      first: 100
-      ownerAffiliations: OWNER
-      isFork: false
-      orderBy: { field: PUSHED_AT, direction: DESC }
-    ) {
+    repositories(first: 1, ownerAffiliations: OWNER, isFork: false) {
       totalCount
-      nodes {
-        name
-        isArchived
-        pushedAt
-        stargazerCount
-        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
-          edges { size node { name } }
-        }
-      }
     }
   }
 }
@@ -171,31 +124,7 @@ def graphql(query: str, login: str, token: str) -> dict:
 
 
 def fetch(login: str, token: str) -> dict:
-    """The user, with any organisation repositories folded into the repo list."""
-    user = graphql(QUERY, login, token)["user"]
-
-    for org in EXTRA_ORGS:
-        try:
-            data = graphql(ORG_QUERY, org, token)
-        except SystemExit:
-            # A missing or invisible org is not fatal: the token may simply not
-            # be able to see it, and a language card is worth less than the run.
-            print(f"  (org {org}: not visible to this token, skipped)")
-            continue
-        node = data.get("organization")
-        if not node:
-            continue
-        repos = node["repositories"]["nodes"]
-        if repos:
-            print(f"  (org {org}: +{len(repos)} repos)")
-        for repo in repos:
-            # Namespaced so an org repo cannot collide with a user repo of the
-            # same name, and so the source is obvious when debugging.
-            repo["name"] = f"{org}/{repo['name']}"
-            repo.setdefault("stargazerCount", 0)
-        user["repositories"]["nodes"].extend(repos)
-
-    return user
+    return graphql(QUERY, login, token)["user"]
 
 
 def days_of(user: dict) -> list[tuple[date, int]]:
@@ -229,101 +158,6 @@ def streaks(days: list[tuple[date, int]]) -> tuple[int, int]:
         else:
             break
     return current, longest
-
-
-# Byte counts are a terrible proxy for "what does this person write", and these
-# are the worst offenders. A .ipynb stores every chart and image as base64 INSIDE
-# the JSON, so a single coursework notebook can outweigh an entire service: one
-# repo here was 88% of the whole card. Markup and data formats are not languages
-# anyone claims either.
-NOT_A_LANGUAGE = {
-    "Jupyter Notebook",
-    "HTML",
-    "CSS",
-    "SCSS",
-    "Roff",
-    "TeX",
-    "Inno Setup",
-    "Batchfile",
-}
-
-# No single repository may contribute more than this share of the total. One
-# vendored dependency tree or one dataset-shaped repo would otherwise decide the
-# entire chart.
-REPO_CAP = 0.35
-
-# Below this share a language is not a skill, it is a stray file.
-MIN_SHARE = 0.005
-
-
-def languages(
-    user: dict,
-    top: int = 6,
-    within_days: int | None = 365,
-    today: date | None = None,
-) -> list[tuple[str, int, int]]:
-    """
-    (language, bytes, repo count) across owned, non-fork, non-archived repos.
-
-    `within_days` keeps only repositories pushed inside that window, so the card
-    answers "what am I writing NOW" instead of "what have I ever written". Pass
-    None for all time.
-
-    An honest caveat, stated here because the card cannot state it: GitHub's
-    language API is a snapshot of a repo's CURRENT contents — there is no history
-    in it. So this is "languages of the repos I touched in that window", not
-    "bytes I wrote in that window". Getting the latter means walking every commit
-    diff, which is a different and far more expensive job. The card's caption is
-    worded to match what is actually measured.
-
-    Two corrections applied on top, both because raw Linguist bytes lie:
-      - languages in NOT_A_LANGUAGE are dropped entirely
-      - each repo is scaled down if it exceeds REPO_CAP of everything else, so
-        the chart shows a body of work rather than its single largest file
-    """
-    repos = [r for r in user["repositories"]["nodes"] if not r["isArchived"]]
-
-    if within_days is not None:
-        cutoff = (today or date.today()) - timedelta(days=within_days)
-        repos = [
-            r
-            for r in repos
-            if r.get("pushedAt")
-            and datetime.strptime(r["pushedAt"][:10], "%Y-%m-%d").date() >= cutoff
-        ]
-
-    kept = []
-    for repo in repos:
-        langs = {
-            e["node"]["name"]: e["size"]
-            for e in repo["languages"]["edges"]
-            if e["node"]["name"] not in NOT_A_LANGUAGE
-        }
-        if langs:
-            kept.append(langs)
-
-    grand = sum(sum(l.values()) for l in kept) or 1
-
-    totals: dict[str, float] = {}
-    counts: dict[str, int] = {}
-    for langs in kept:
-        size = sum(langs.values())
-        # Scale the whole repo down proportionally rather than clipping one
-        # language, so the repo's internal language mix is preserved.
-        scale = min(1.0, (REPO_CAP * grand) / size) if size else 1.0
-        for name, value in langs.items():
-            totals[name] = totals.get(name, 0) + value * scale
-            counts[name] = counts.get(name, 0) + 1
-
-    # Drop anything that rounds to 0.0% on the card. A vendored test fixture or a
-    # single config file otherwise earns a row that reads as a claimed skill.
-    grand_total = sum(totals.values()) or 1
-    ranked = [
-        (name, value)
-        for name, value in sorted(totals.items(), key=lambda kv: kv[1], reverse=True)
-        if value / grand_total >= MIN_SHARE
-    ][:top]
-    return [(name, int(value), counts[name]) for name, value in ranked]
 
 
 # --------------------------------------------------------------------------- #
@@ -493,104 +327,101 @@ def streak_card(current: int, longest: int, total: int, repos: int, t: Theme) ->
     write("streak.svg", t, s)
 
 
-def lang_card(
-    langs: list[tuple[str, int, int]],
-    t: Theme,
-    slug: str = "langs",
-    heading: str = "TOP LANGUAGES",
-    caption: str = "public repos · notebooks excluded",
-) -> None:
-    row_h, top = 26, 40
-    # An empty window still gets a card, so a README that links it never 404s.
-    h = top + row_h * max(len(langs), 1) + 12
-    total = sum(v for _, v, _ in langs) or 1
-    s = svg_open(WIDTH, h, t, f"{heading.lower()} — {caption}")
-    s += text(heading, PAD, 20, 11, t.muted, spacing="3")
-    # Say what the number actually measures. Private work is the majority here
-    # and is invisible to this token, so an unqualified chart would mislead.
-    s += text(caption, WIDTH - PAD, 20, 10, t.muted, anchor="end")
+RANK_URL = "https://saidmustafasaid.com/rank.json"
 
-    if not langs:
-        s += text("no public repositories in this window", PAD, top + 14, 12, t.muted)
-        write(f"{slug}.svg", t, s)
-        return
+# Tier → weight. Only the top tiers get the accent; the weak fields are drawn
+# muted so the chart reads as a shape rather than a scoreboard.
+RANK_TIERS = ["ACADEMIC", "JUNIOR", "ASSOCIATE", "PROFESSIONAL", "SENIOR", "STAFF", "ARCHITECT", "PRINCIPAL"]
 
-    bar_x = PAD + 116
-    bar_w = WIDTH - PAD - 96 - bar_x
-    for i, (name, size, n_repos) in enumerate(langs):
+
+def fetch_rank(url: str = RANK_URL) -> dict | None:
+    """
+    The 12-field mastery scores, from my own site.
+
+    Returns None on any failure — a missing chart is survivable, a failed daily
+    run is not. The previously committed SVG then stays in place, so the README
+    never shows a broken image because a self-hosted box was rebooting.
+    """
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "profile-generator"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = json.load(r)
+    except Exception as e:  # network, DNS, TLS, JSON — all equally non-fatal
+        print(f"  (rank.json unavailable: {e}; keeping the committed chart)")
+        return None
+    if not data.get("fields"):
+        print("  (rank.json has no fields; keeping the committed chart)")
+        return None
+    return data
+
+
+def field_card(rank: dict, t: Theme) -> None:
+    """
+    The 12 fields, strongest to weakest.
+
+    This is the centrepiece, and the weak rows are the reason it works: a
+    self-assessment that shows MOBILE at zero is one you can believe about the
+    fields it scores high. Scores come from my own engine over real project
+    history, not from counting bytes on GitHub — which is the only honest option
+    when almost all the work is in private repositories.
+    """
+    fields = rank["fields"]
+    row_h, top = 24, 58
+    h = top + row_h * len(fields) + 22
+
+    # Wide enough for the longest real label ("PLATFORM & DEVELOPER TOOLING",
+    # 28 chars at ~6.6px per char in this mono) — truncating a field name to fit
+    # a round number would hide what the row is about.
+    label_w = 200
+    bar_x = PAD + label_w
+    bar_w = WIDTH - PAD - 112 - bar_x
+
+    s = svg_open(WIDTH, h, t, "engineering field map, twelve fields scored")
+    s += text("FIELD MAP", PAD, 20, 11, t.muted, spacing="3")
+    s += text(f"rank: {rank.get('rank', '').upper()}", WIDTH - PAD, 20, 10, t.accent, anchor="end", spacing="2")
+    s += text(
+        "scored from real project history · saidmustafasaid.com",
+        PAD, 38, 10, t.muted,
+    )
+
+    for i, f in enumerate(fields):
         y = top + i * row_h
-        pct = size / total
+        # `value` is 0..1 from the engine; the card shows it out of 100.
+        pct = max(0.0, min(1.0, float(f["value"])))
         fill_w = bar_w * pct
-        s += text(name, PAD, y + 14, 12, t.fg)
-        # Repo count next to the bar: "3 repos at 40%" is a different claim from
-        # "one repo at 40%", and the bar alone cannot tell them apart.
-        s += text(f"{n_repos}×", WIDTH - PAD - 52, y + 14, 10, t.muted, anchor="end")
-        s += f'<rect x="{bar_x}" y="{y + 5}" width="{bar_w}" height="10" rx="1" fill="{t.grid}"/>'
-        # Final width on the attribute, animation *to* it — a renderer that drops
-        # SMIL (or a static screenshot) shows a full bar, not an empty track.
-        s += (
-            f'<rect x="{bar_x}" y="{y + 5}" width="{fill_w:.1f}" height="10" rx="1" fill="{t.accent}">'
-            # Every start is offset: an animation that begins at exactly 0s has
-            # already applied `from` by the time a static renderer samples the
-            # frame, which erases the first bar.
-            f'<animate attributeName="width" from="0" to="{fill_w:.1f}" dur="0.9s" '
-            f'begin="{0.15 + i * 0.08:.2f}s" fill="freeze" calcMode="spline" '
-            f'keySplines="0.16 1 0.3 1" keyTimes="0;1"/>'
-            f"</rect>"
-        )
-        s += text(f"{pct * 100:4.1f}%", WIDTH - PAD, y + 14, 11, t.muted, anchor="end")
-    write(f"{slug}.svg", t, s)
+        strong = f.get("rank", "") in ("PROFESSIONAL", "SENIOR", "STAFF", "ARCHITECT", "PRINCIPAL")
+        colour = t.accent if strong else t.levels[2]
 
+        label = f["label"]
+        if len(label) > 29:
+            label = label[:28] + "…"
+        s += text(label, PAD, y + 13, 11, t.fg if strong else t.muted)
 
-def year_strip(days: list[tuple[date, int]], t: Theme) -> None:
-    """One character per day, quiet to loud. textLength pins each row to the same
-    width, so the grid holds together in any monospace."""
-    counts = sorted(c for _, c in days if c > 0)
-    qs = [counts[int(len(counts) * f)] for f in (0.33, 0.66)] if counts else [1, 2]
+        s += f'<rect x="{bar_x}" y="{y + 4}" width="{bar_w}" height="10" rx="1" fill="{t.grid}"/>'
+        if fill_w > 0:
+            s += (
+                f'<rect x="{bar_x}" y="{y + 4}" width="{fill_w:.1f}" height="10" rx="1" fill="{colour}">'
+                f'<animate attributeName="width" from="0" to="{fill_w:.1f}" dur="0.9s" '
+                f'begin="{0.15 + i * 0.05:.2f}s" fill="freeze" calcMode="spline" '
+                f'keySplines="0.16 1 0.3 1" keyTimes="0;1"/>'
+                f"</rect>"
+            )
 
-    def char(c: int) -> str:
-        if c == 0:
-            return RAMP[1]
-        if c <= qs[0]:
-            return RAMP[2]
-        if c <= qs[1]:
-            return RAMP[3]
-        return RAMP[4]
+        s += text(f"{pct * 100:4.1f}", bar_x + bar_w + 30, y + 13, 11, t.fg if strong else t.muted, anchor="end")
+        s += text(f.get("rank", ""), WIDTH - PAD, y + 13, 9, t.muted, anchor="end", spacing="1")
 
-    offset = (days[0][0].weekday() + 1) % 7 if days else 0
-    weeks = (len(days) + offset + 6) // 7
-    rows = [[" "] * weeks for _ in range(7)]
-    for i, (_, c) in enumerate(days):
-        idx = i + offset
-        rows[idx % 7][idx // 7] = char(c)
-
-    line_h, top = 15, 40
-    h = top + 7 * line_h + 14
-    s = svg_open(WIDTH, h, t, "the last year, one character per day")
-    s += text("THE LAST YEAR", PAD, 20, 11, t.muted, spacing="3")
-    s += text(f"{RAMP[1]} {RAMP[2]} {RAMP[3]} {RAMP[4]}  quiet to loud", WIDTH - PAD, 20, 10, t.muted, anchor="end")
-    for r, row in enumerate(rows):
-        s += text("".join(row), PAD, top + r * line_h, 12, t.accent, length=INNER)
-    write("year.svg", t, s)
+    computed = (rank.get("computed") or "")[:10]
+    if computed:
+        s += text(f"recomputed {computed}", PAD, h - 8, 9, t.muted)
+    write("fields.svg", t, s)
 
 
 # --------------------------------------------------------------------------- #
 
-# One card per window. The README shows the first and tucks the rest into
-# <details> blocks, which is the only interactivity GitHub markdown allows — it
-# strips scripts, so a real toggle is impossible. Default is the last 12 months
-# because "what is he writing now" ages better than a lifetime total that only
-# ever grows more stale.
-WINDOWS = [
-    ("langs", 365, "TOP LANGUAGES · LAST 12 MONTHS", "repos pushed since last year"),
-    ("langs-3y", 1095, "TOP LANGUAGES · LAST 3 YEARS", "repos pushed in 3 years"),
-    ("langs-all", None, "TOP LANGUAGES · ALL TIME", "every public repo"),
-]
-
 HEADINGS = [
     ("about", "01 — about"),
-    ("stack", "02 — stack"),
-    ("projects", "03 — projects"),
+    ("shipped", "02 — shipped"),
+    ("fields", "03 — field map"),
     ("stats", "04 — telemetry"),
     ("colophon", "05 — about this page"),
 ]
@@ -620,27 +451,24 @@ def main() -> int:
     current, longest = streaks(days)
     repos = user["repositories"]["totalCount"]
 
-    # Computed once, drawn twice (light + dark).
-    windows = [
-        (slug, heading_text, caption, languages(user, within_days=within))
-        for slug, within, heading_text, caption in WINDOWS
-    ]
+    # The centrepiece. Language-by-bytes was dropped: with ~96% of the work in
+    # private repositories it measured a rounding error and called it a person.
+    rank = fetch_rank()
 
-    print(f"{login}: {total} contributions, streak {current}/{longest}, {repos} own repos")
-    for slug, _, caption, langs in windows:
-        summary = ", ".join(f"{n} {v}" for n, v, _ in langs[:3]) or "empty"
-        print(f"  {slug:<10} ({caption}): {summary}")
+    print(f"{login}: {total} contributions ({private} private), streak {current}/{longest}")
+    if rank:
+        top3 = ", ".join(f"{f['label']} {f['value'] * 100:.0f}" for f in rank["fields"][:3])
+        print(f"  field map: rank {rank.get('rank')}, {len(rank['fields'])} fields — {top3}")
 
     for theme in (LIGHT, DARK):
         print(f"{theme.name}:")
         header(user.get("name") or "Said Mustafa Said", theme)
         for slug, label in HEADINGS:
             heading(slug, label, theme)
+        if rank:
+            field_card(rank, theme)
         calendar(days, total, private, theme)
         streak_card(current, longest, total, repos, theme)
-        for slug, heading_text, caption, langs in windows:
-            lang_card(langs, theme, slug=slug, heading=heading_text, caption=caption)
-        year_strip(days, theme)
     return 0
 
 
