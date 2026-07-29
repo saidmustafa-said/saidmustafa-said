@@ -104,7 +104,10 @@ it plainly, I do not know it yet.
 **Said Mustafa Said**, AI/ML &amp; Cloud Engineer, Berlin, Germany ·
 [contact@saidmustafasaid.com](mailto:contact@saidmustafasaid.com)
 
-Every graphic here is drawn from my own data by a daily action, so nothing on this page loads from someone else's server. There is no language chart on purpose: GitHub counts bytes in public repos, and my public repos are not the work.
+Every graphic here is drawn from my own data by a daily action, 
+so nothing on this page loads from someone else's server. 
+There is no language chart on purpose: GitHub counts bytes in public repos, 
+and my public repos are not the work.
 
 </sub>
 </div>
