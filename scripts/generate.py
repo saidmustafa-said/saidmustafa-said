@@ -106,6 +106,7 @@ query($login: String!) {
       totalCount
       nodes {
         name
+        isArchived
         stargazerCount
         languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges { size node { name } }
@@ -169,13 +170,64 @@ def streaks(days: list[tuple[date, int]]) -> tuple[int, int]:
     return current, longest
 
 
-def languages(user: dict, top: int = 6) -> list[tuple[str, int]]:
-    """Bytes per language across owned, non-fork repositories."""
-    totals: dict[str, int] = {}
-    for repo in user["repositories"]["nodes"]:
-        for edge in repo["languages"]["edges"]:
-            totals[edge["node"]["name"]] = totals.get(edge["node"]["name"], 0) + edge["size"]
-    return sorted(totals.items(), key=lambda kv: kv[1], reverse=True)[:top]
+# Byte counts are a terrible proxy for "what does this person write", and these
+# are the worst offenders. A .ipynb stores every chart and image as base64 INSIDE
+# the JSON, so a single coursework notebook can outweigh an entire service: one
+# repo here was 88% of the whole card. Markup and data formats are not languages
+# anyone claims either.
+NOT_A_LANGUAGE = {
+    "Jupyter Notebook",
+    "HTML",
+    "CSS",
+    "SCSS",
+    "Roff",
+    "TeX",
+    "Inno Setup",
+    "Batchfile",
+}
+
+# No single repository may contribute more than this share of the total. One
+# vendored dependency tree or one dataset-shaped repo would otherwise decide the
+# entire chart.
+REPO_CAP = 0.35
+
+
+def languages(user: dict, top: int = 6) -> list[tuple[str, int, int]]:
+    """
+    (language, bytes, repo count) across owned, non-fork, non-archived repos.
+
+    Two corrections applied, both because raw Linguist bytes lie:
+      - languages in NOT_A_LANGUAGE are dropped entirely
+      - each repo is scaled down if it exceeds REPO_CAP of everything else, so
+        the chart shows a body of work rather than its single largest file
+    """
+    repos = [r for r in user["repositories"]["nodes"] if not r["isArchived"]]
+
+    kept = []
+    for repo in repos:
+        langs = {
+            e["node"]["name"]: e["size"]
+            for e in repo["languages"]["edges"]
+            if e["node"]["name"] not in NOT_A_LANGUAGE
+        }
+        if langs:
+            kept.append(langs)
+
+    grand = sum(sum(l.values()) for l in kept) or 1
+
+    totals: dict[str, float] = {}
+    counts: dict[str, int] = {}
+    for langs in kept:
+        size = sum(langs.values())
+        # Scale the whole repo down proportionally rather than clipping one
+        # language, so the repo's internal language mix is preserved.
+        scale = min(1.0, (REPO_CAP * grand) / size) if size else 1.0
+        for name, value in langs.items():
+            totals[name] = totals.get(name, 0) + value * scale
+            counts[name] = counts.get(name, 0) + 1
+
+    ranked = sorted(totals.items(), key=lambda kv: kv[1], reverse=True)[:top]
+    return [(name, int(value), counts[name]) for name, value in ranked]
 
 
 # --------------------------------------------------------------------------- #
@@ -345,21 +397,26 @@ def streak_card(current: int, longest: int, total: int, repos: int, t: Theme) ->
     write("streak.svg", t, s)
 
 
-def lang_card(langs: list[tuple[str, int]], t: Theme) -> None:
+def lang_card(langs: list[tuple[str, int, int]], t: Theme) -> None:
     row_h, top = 26, 40
     h = top + row_h * len(langs) + 12
-    total = sum(v for _, v in langs) or 1
-    s = svg_open(WIDTH, h, t, "top languages by bytes")
+    total = sum(v for _, v, _ in langs) or 1
+    s = svg_open(WIDTH, h, t, "top languages across public repositories")
     s += text("TOP LANGUAGES", PAD, 20, 11, t.muted, spacing="3")
-    s += text("own repos only, forks excluded", WIDTH - PAD, 20, 10, t.muted, anchor="end")
+    # Say what the number actually measures. Private work is the majority here
+    # and is invisible to this token, so an unqualified chart would mislead.
+    s += text("public repos · notebooks excluded", WIDTH - PAD, 20, 10, t.muted, anchor="end")
 
     bar_x = PAD + 116
-    bar_w = WIDTH - PAD - 56 - bar_x
-    for i, (name, size) in enumerate(langs):
+    bar_w = WIDTH - PAD - 96 - bar_x
+    for i, (name, size, n_repos) in enumerate(langs):
         y = top + i * row_h
         pct = size / total
         fill_w = bar_w * pct
         s += text(name, PAD, y + 14, 12, t.fg)
+        # Repo count next to the bar: "3 repos at 40%" is a different claim from
+        # "one repo at 40%", and the bar alone cannot tell them apart.
+        s += text(f"{n_repos}×", WIDTH - PAD - 52, y + 14, 10, t.muted, anchor="end")
         s += f'<rect x="{bar_x}" y="{y + 5}" width="{bar_w}" height="10" rx="1" fill="{t.grid}"/>'
         # Final width on the attribute, animation *to* it — a renderer that drops
         # SMIL (or a static screenshot) shows a full bar, not an empty track.
