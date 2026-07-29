@@ -85,6 +85,38 @@ LIGHT = Theme(
 # data
 # --------------------------------------------------------------------------- #
 
+# Organisations whose repositories are also mine. Without these the language card
+# is a lie by omission: the biggest TypeScript codebase here lives in Conducks/,
+# is public, and was invisible because `ownerAffiliations: OWNER` means "owned by
+# the USER account" — an org repo is owned by the org, not by me.
+#
+# Listed explicitly rather than resolved from org membership, because the Actions
+# token is scoped to this repository and cannot enumerate an organisation's
+# members. Naming the org works with any token for public repos. Add an org here
+# when one starts holding work worth counting.
+EXTRA_ORGS = ["Conducks", "myCVpath", "Said-Foundation"]
+
+ORG_QUERY = """
+query($login: String!) {
+  organization(login: $login) {
+    repositories(
+      first: 100
+      isFork: false
+      orderBy: { field: PUSHED_AT, direction: DESC }
+    ) {
+      nodes {
+        name
+        isArchived
+        pushedAt
+        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+          edges { size node { name } }
+        }
+      }
+    }
+  }
+}
+"""
+
 QUERY = """
 query($login: String!) {
   user(login: $login) {
@@ -119,8 +151,8 @@ query($login: String!) {
 """
 
 
-def fetch(login: str, token: str) -> dict:
-    body = json.dumps({"query": QUERY, "variables": {"login": login}}).encode()
+def graphql(query: str, login: str, token: str) -> dict:
+    body = json.dumps({"query": query, "variables": {"login": login}}).encode()
     req = urllib.request.Request(
         API,
         data=body,
@@ -135,7 +167,35 @@ def fetch(login: str, token: str) -> dict:
     # GraphQL answers 200 with an errors array, so this has to be checked by hand.
     if "errors" in payload:
         raise SystemExit(f"GraphQL error: {payload['errors']}")
-    return payload["data"]["user"]
+    return payload["data"]
+
+
+def fetch(login: str, token: str) -> dict:
+    """The user, with any organisation repositories folded into the repo list."""
+    user = graphql(QUERY, login, token)["user"]
+
+    for org in EXTRA_ORGS:
+        try:
+            data = graphql(ORG_QUERY, org, token)
+        except SystemExit:
+            # A missing or invisible org is not fatal: the token may simply not
+            # be able to see it, and a language card is worth less than the run.
+            print(f"  (org {org}: not visible to this token, skipped)")
+            continue
+        node = data.get("organization")
+        if not node:
+            continue
+        repos = node["repositories"]["nodes"]
+        if repos:
+            print(f"  (org {org}: +{len(repos)} repos)")
+        for repo in repos:
+            # Namespaced so an org repo cannot collide with a user repo of the
+            # same name, and so the source is obvious when debugging.
+            repo["name"] = f"{org}/{repo['name']}"
+            repo.setdefault("stargazerCount", 0)
+        user["repositories"]["nodes"].extend(repos)
+
+    return user
 
 
 def days_of(user: dict) -> list[tuple[date, int]]:
@@ -191,6 +251,9 @@ NOT_A_LANGUAGE = {
 # vendored dependency tree or one dataset-shaped repo would otherwise decide the
 # entire chart.
 REPO_CAP = 0.35
+
+# Below this share a language is not a skill, it is a stray file.
+MIN_SHARE = 0.005
 
 
 def languages(
@@ -252,7 +315,14 @@ def languages(
             totals[name] = totals.get(name, 0) + value * scale
             counts[name] = counts.get(name, 0) + 1
 
-    ranked = sorted(totals.items(), key=lambda kv: kv[1], reverse=True)[:top]
+    # Drop anything that rounds to 0.0% on the card. A vendored test fixture or a
+    # single config file otherwise earns a row that reads as a claimed skill.
+    grand_total = sum(totals.values()) or 1
+    ranked = [
+        (name, value)
+        for name, value in sorted(totals.items(), key=lambda kv: kv[1], reverse=True)
+        if value / grand_total >= MIN_SHARE
+    ][:top]
     return [(name, int(value), counts[name]) for name, value in ranked]
 
 
