@@ -107,6 +107,7 @@ query($login: String!) {
       nodes {
         name
         isArchived
+        pushedAt
         stargazerCount
         languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges { size node { name } }
@@ -192,16 +193,41 @@ NOT_A_LANGUAGE = {
 REPO_CAP = 0.35
 
 
-def languages(user: dict, top: int = 6) -> list[tuple[str, int, int]]:
+def languages(
+    user: dict,
+    top: int = 6,
+    within_days: int | None = 365,
+    today: date | None = None,
+) -> list[tuple[str, int, int]]:
     """
     (language, bytes, repo count) across owned, non-fork, non-archived repos.
 
-    Two corrections applied, both because raw Linguist bytes lie:
+    `within_days` keeps only repositories pushed inside that window, so the card
+    answers "what am I writing NOW" instead of "what have I ever written". Pass
+    None for all time.
+
+    An honest caveat, stated here because the card cannot state it: GitHub's
+    language API is a snapshot of a repo's CURRENT contents — there is no history
+    in it. So this is "languages of the repos I touched in that window", not
+    "bytes I wrote in that window". Getting the latter means walking every commit
+    diff, which is a different and far more expensive job. The card's caption is
+    worded to match what is actually measured.
+
+    Two corrections applied on top, both because raw Linguist bytes lie:
       - languages in NOT_A_LANGUAGE are dropped entirely
       - each repo is scaled down if it exceeds REPO_CAP of everything else, so
         the chart shows a body of work rather than its single largest file
     """
     repos = [r for r in user["repositories"]["nodes"] if not r["isArchived"]]
+
+    if within_days is not None:
+        cutoff = (today or date.today()) - timedelta(days=within_days)
+        repos = [
+            r
+            for r in repos
+            if r.get("pushedAt")
+            and datetime.strptime(r["pushedAt"][:10], "%Y-%m-%d").date() >= cutoff
+        ]
 
     kept = []
     for repo in repos:
@@ -397,15 +423,27 @@ def streak_card(current: int, longest: int, total: int, repos: int, t: Theme) ->
     write("streak.svg", t, s)
 
 
-def lang_card(langs: list[tuple[str, int, int]], t: Theme) -> None:
+def lang_card(
+    langs: list[tuple[str, int, int]],
+    t: Theme,
+    slug: str = "langs",
+    heading: str = "TOP LANGUAGES",
+    caption: str = "public repos · notebooks excluded",
+) -> None:
     row_h, top = 26, 40
-    h = top + row_h * len(langs) + 12
+    # An empty window still gets a card, so a README that links it never 404s.
+    h = top + row_h * max(len(langs), 1) + 12
     total = sum(v for _, v, _ in langs) or 1
-    s = svg_open(WIDTH, h, t, "top languages across public repositories")
-    s += text("TOP LANGUAGES", PAD, 20, 11, t.muted, spacing="3")
+    s = svg_open(WIDTH, h, t, f"{heading.lower()} — {caption}")
+    s += text(heading, PAD, 20, 11, t.muted, spacing="3")
     # Say what the number actually measures. Private work is the majority here
     # and is invisible to this token, so an unqualified chart would mislead.
-    s += text("public repos · notebooks excluded", WIDTH - PAD, 20, 10, t.muted, anchor="end")
+    s += text(caption, WIDTH - PAD, 20, 10, t.muted, anchor="end")
+
+    if not langs:
+        s += text("no public repositories in this window", PAD, top + 14, 12, t.muted)
+        write(f"{slug}.svg", t, s)
+        return
 
     bar_x = PAD + 116
     bar_w = WIDTH - PAD - 96 - bar_x
@@ -431,7 +469,7 @@ def lang_card(langs: list[tuple[str, int, int]], t: Theme) -> None:
             f"</rect>"
         )
         s += text(f"{pct * 100:4.1f}%", WIDTH - PAD, y + 14, 11, t.muted, anchor="end")
-    write("langs.svg", t, s)
+    write(f"{slug}.svg", t, s)
 
 
 def year_strip(days: list[tuple[date, int]], t: Theme) -> None:
@@ -468,6 +506,17 @@ def year_strip(days: list[tuple[date, int]], t: Theme) -> None:
 
 # --------------------------------------------------------------------------- #
 
+# One card per window. The README shows the first and tucks the rest into
+# <details> blocks, which is the only interactivity GitHub markdown allows — it
+# strips scripts, so a real toggle is impossible. Default is the last 12 months
+# because "what is he writing now" ages better than a lifetime total that only
+# ever grows more stale.
+WINDOWS = [
+    ("langs", 365, "TOP LANGUAGES · LAST 12 MONTHS", "repos pushed since last year"),
+    ("langs-3y", 1095, "TOP LANGUAGES · LAST 3 YEARS", "repos pushed in 3 years"),
+    ("langs-all", None, "TOP LANGUAGES · ALL TIME", "every public repo"),
+]
+
 HEADINGS = [
     ("about", "01 — about"),
     ("stack", "02 — stack"),
@@ -499,10 +548,19 @@ def main() -> int:
     days = [d for d in days if d[0] >= cutoff] if cutoff else days
 
     current, longest = streaks(days)
-    langs = languages(user)
     repos = user["repositories"]["totalCount"]
 
+    # Computed once, drawn twice (light + dark).
+    windows = [
+        (slug, heading_text, caption, languages(user, within_days=within))
+        for slug, within, heading_text, caption in WINDOWS
+    ]
+
     print(f"{login}: {total} contributions, streak {current}/{longest}, {repos} own repos")
+    for slug, _, caption, langs in windows:
+        summary = ", ".join(f"{n} {v}" for n, v, _ in langs[:3]) or "empty"
+        print(f"  {slug:<10} ({caption}): {summary}")
+
     for theme in (LIGHT, DARK):
         print(f"{theme.name}:")
         header(user.get("name") or "Said Mustafa Said", theme)
@@ -510,7 +568,8 @@ def main() -> int:
             heading(slug, label, theme)
         calendar(days, total, private, theme)
         streak_card(current, longest, total, repos, theme)
-        lang_card(langs, theme)
+        for slug, heading_text, caption, langs in windows:
+            lang_card(langs, theme, slug=slug, heading=heading_text, caption=caption)
         year_strip(days, theme)
     return 0
 

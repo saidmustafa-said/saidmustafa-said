@@ -59,7 +59,17 @@ OCR and transcription, no signup — the public face of the internal media servi
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/streak.svg"/><img src="assets/streak.svg" width="620" alt="Current streak, longest streak, contributions, own repositories"/></picture>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs.svg"/><img src="assets/langs.svg" width="620" alt="Top languages by bytes, own repositories only"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs.svg"/><img src="assets/langs.svg" width="620" alt="Top languages across repositories pushed in the last 12 months"/></picture>
+
+<details>
+<summary><sub>longer windows</sub></summary>
+<br/>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs-3y.svg"/><img src="assets/langs-3y.svg" width="620" alt="Top languages across repositories pushed in the last three years"/></picture>
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/langs-all.svg"/><img src="assets/langs-all.svg" width="620" alt="Top languages across every public repository"/></picture>
+
+</details>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/year.svg"/><img src="assets/year.svg" width="620" alt="The last year, one character per day"/></picture>
 
@@ -78,9 +88,18 @@ image is the only way to put this page's own type and colour on them. Each
 animation ends on its finished state, so a renderer that ignores SMIL still shows
 a complete graphic rather than an empty one.
 
-Language totals cover public, non-fork repositories only — forks would drown the
-signal. The contribution count includes private work where the account exposes it;
-the organisation repositories where most of the code lives are not public.
+The language card defaults to the **last 12 months** — what I am writing now ages
+better than a lifetime total that only ever grows more stale. Longer windows are
+behind the toggle. One honest caveat: GitHub's language API reports a repository's
+CURRENT contents, with no history in it, so a window means "the repos I pushed to
+in that period", not "the bytes I wrote in it".
+
+Totals cover public, non-fork, non-archived repositories only — forks would drown
+the signal. Notebooks and markup are excluded and no single repository may exceed
+35% of a chart: a `.ipynb` stores every rendered plot as base64 inside the JSON, so
+one coursework repo was briefly 88% of the chart while saying nothing about the
+work. The contribution count includes private work where the account exposes it;
+the repositories where most of the code lives are not public.
 
 <div align="center">
 <sub>
