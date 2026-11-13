@@ -1,6 +1,6 @@
 <div align="center">
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI/ML and Cloud Engineer, Berlin, Germany"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI agent engineer, Berlin, Germany"/></picture>
 
 [saidmustafasaid.com](https://saidmustafasaid.com)
 &nbsp;·&nbsp;
@@ -24,20 +24,25 @@ I build AI systems end to end, then run them on the infrastructure they need.
 Multi agent RAG, LLM orchestration, ML pipelines and MLOps, on Kubernetes and
 AWS. Three years of that in production, mostly Go, Python and Terraform.
 
-Right now I am building **myCVpath**, an AI CV platform, and **CONDUCKS**, which
-reads a codebase as a graph instead of as text. Both are live and both are
-private.
+Right now I am building three products. **WeaveCrawl** is a browser for AI
+agents that asks you before anything that counts, in private testing.
+**CONDUCKS** reads a codebase as a graph instead of as text, and it is open
+source. **myCVpath** is an AI CV platform, live and private.
 
-That last word is the honest part. Almost all of my work sits in closed
-repositories, so counting public code would measure the small leftover and call
-it a person. The field map below measures the work itself.
+Most of my work still sits in closed repositories, so counting public code would
+measure the small leftover and call it a person. The field map below measures the work itself.
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hd-shipped.svg"/><img src="assets/hd-shipped.svg" width="620" alt="shipped"/></picture>
 
 <samp>python &nbsp; go &nbsp; typescript &nbsp; rust &nbsp; kubernetes &nbsp; terraform &nbsp; aws &nbsp; eks &nbsp; docker &nbsp; postgres &nbsp; duckdb &nbsp; next.js &nbsp; linux</samp>
 
+**[WeaveCrawl](https://weavecrawl.com)** &nbsp;·&nbsp; <samp>python, typescript, mcp</samp><br>
+A browser for AI agents. You say what you need in plain words, it does the steps
+on the web, learns each site, and stops to ask you before anything that counts.
+It runs in your own Chrome, as a desktop app, or from any agent over MCP.
+
 **[CONDUCKS](https://conducks.com)** &nbsp;·&nbsp; <samp>typescript, tree-sitter, duckdb</samp><br>
-Structural intelligence for codebases. Tree-sitter parses the source, DuckDB
+Open source structural intelligence for codebases. Tree-sitter parses the source, DuckDB
 holds the graph, PageRank ranks it. So "what calls this" and "what breaks if I
 change it" are answered from the real call graph, not from a grep.
 
@@ -101,7 +106,7 @@ it plainly, I do not know it yet.
 <div align="center">
 <sub>
 
-**Said Mustafa Said**, AI/ML &amp; Cloud Engineer, Berlin, Germany ·
+**Said Mustafa Said**, AI agent engineer, Berlin, Germany ·
 [contact@saidmustafasaid.com](mailto:contact@saidmustafasaid.com)
 
 

@@ -210,11 +210,11 @@ def header(name: str, t: Theme) -> None:
     # Canvas sized from the name, not hard-coded: a fixed height put the role
     # line on top of the last name line.
     h = first + line_h * (len(parts) - 1) + 52
-    s = svg_open(WIDTH, h, t, f"{name} — AI/ML and Cloud Engineer, Berlin")
+    s = svg_open(WIDTH, h, t, f"{name} — AI agent engineer, Berlin")
     for i, part in enumerate(parts):
         s += text(part, PAD, first + i * line_h, 30,
                   t.accent if i == 1 else t.fg, weight="600", spacing="1")
-    s += text("AI/ML & CLOUD ENGINEER   ·   BERLIN, GERMANY", PAD, h - 22, 11,
+    s += text("AI AGENT ENGINEER   ·   BERLIN, GERMANY", PAD, h - 22, 11,
               t.muted, spacing="3")
     s += f'<rect x="{PAD}" y="{h - 10}" width="{INNER}" height="1" fill="{t.grid}"/>'
     write("header.svg", t, s)
