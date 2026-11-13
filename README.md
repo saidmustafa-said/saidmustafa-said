@@ -1,6 +1,6 @@
 <div align="center">
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI agent engineer, Berlin, Germany"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="620" alt="Said Mustafa Said, AI engineer, Berlin, Germany"/></picture>
 
 [saidmustafasaid.com](https://saidmustafasaid.com)
 &nbsp;·&nbsp;
@@ -106,7 +106,7 @@ it plainly, I do not know it yet.
 <div align="center">
 <sub>
 
-**Said Mustafa Said**, AI agent engineer, Berlin, Germany ·
+**Said Mustafa Said**, AI engineer, Berlin, Germany ·
 [contact@saidmustafasaid.com](mailto:contact@saidmustafasaid.com)
 
 
